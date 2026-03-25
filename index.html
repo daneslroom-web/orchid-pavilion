@@ -4,335 +4,316 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Orchid Pavilion — Staff Training</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --gold: #c9a96e;
-  --gold-light: #e2c898;
-  --gold-dim: rgba(201,169,110,0.15);
-  --gold-border: rgba(201,169,110,0.22);
-  --charcoal: #0f0e0d;
-  --charcoal-2: #1a1917;
-  --charcoal-3: #252320;
-  --text-muted: rgba(201,169,110,0.5);
-  --text-body: rgba(255,255,255,0.78);
-  --error: #e07070;
-  --success: #7ec8a0;
+  --bg: #f5f2ee;
+  --bg-2: #ffffff;
+  --bg-3: #ede9e3;
+  --bg-4: #e4dfd7;
+  --accent: #2d6a4f;
+  --accent-2: #40916c;
+  --accent-light: #d8f3dc;
+  --accent-dim: rgba(45,106,79,0.1);
+  --text: #1a1a1a;
+  --text-2: #444;
+  --text-muted: #888;
+  --border: rgba(0,0,0,0.08);
+  --border-2: rgba(0,0,0,0.14);
+  --error: #c0392b;
+  --warning: #e67e22;
+  --success: #27ae60;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.1);
 }
 
-html, body { height: 100%; background: var(--charcoal); color: var(--gold); font-family: 'Inter', sans-serif; overflow: hidden; }
-
-#app { height: 100vh; display: flex; flex-direction: column; align-items: center; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow: hidden; }
 
 #setup-screen {
-  position: fixed; inset: 0; background: var(--charcoal);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 24px; z-index: 100; overflow-y: auto;
+  position: fixed; inset: 0; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding: 32px 20px 40px; z-index: 100; overflow-y: auto;
 }
 
-.setup-logo { text-align: center; margin-bottom: 32px; }
-.setup-logo .icon { font-size: 20px; margin-bottom: 10px; opacity: 0.7; }
+.setup-logo { text-align: center; margin-bottom: 28px; }
+.setup-logo .leaf { font-size: 28px; margin-bottom: 8px; display: block; }
 .setup-logo h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(20px, 5vw, 28px);
-  font-weight: 500; letter-spacing: 0.2em;
-  color: var(--gold); text-transform: uppercase;
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(22px, 5vw, 30px); font-weight: 400;
+  color: var(--accent); letter-spacing: 0.01em;
 }
-.setup-logo p { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+.setup-logo p { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
 
 .setup-card {
-  width: 100%; max-width: 420px;
-  background: var(--charcoal-2);
-  border: 1px solid rgba(201,169,110,0.12);
-  border-radius: 3px; padding: 28px 24px;
+  width: 100%; max-width: 440px;
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 24px; box-shadow: var(--shadow-lg);
 }
 
 .setup-card h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px; font-weight: 400;
-  letter-spacing: 0.1em; color: var(--gold);
-  margin-bottom: 20px; text-align: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px; font-weight: 400; color: var(--text);
+  margin-bottom: 22px; text-align: center;
 }
 
-.field { margin-bottom: 16px; }
-.field label { display: block; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
-.field input, .field select {
-  width: 100%; background: var(--charcoal-3);
-  border: 1px solid rgba(201,169,110,0.15);
-  border-radius: 2px; color: var(--gold-light);
-  font-family: 'Inter', sans-serif; font-size: 12px;
-  padding: 9px 11px; outline: none;
-  transition: border-color 0.2s;
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+.field input {
+  width: 100%; background: var(--bg);
+  border: 1px solid var(--border-2); border-radius: 8px;
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; padding: 10px 12px; outline: none; transition: border-color 0.2s;
 }
-.field input:focus, .field select:focus { border-color: rgba(201,169,110,0.4); }
-.field input::placeholder { color: rgba(201,169,110,0.22); }
-.field select option { background: var(--charcoal-2); }
+.field input:focus { border-color: var(--accent); }
+.field input::placeholder { color: var(--text-muted); }
 
-.lesson-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px; margin-top: 6px;
-}
+.lesson-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 6px; }
 
 .lesson-btn {
-  background: var(--charcoal-3);
-  border: 1px solid rgba(201,169,110,0.15);
-  border-radius: 2px; padding: 10px 8px;
-  cursor: pointer; text-align: left;
-  transition: all 0.2s; color: var(--text-muted);
-  font-family: 'Inter', sans-serif;
+  background: var(--bg); border: 1px solid var(--border-2);
+  border-radius: 8px; padding: 10px 10px; cursor: pointer;
+  text-align: left; transition: all 0.18s; color: var(--text-2);
+  font-family: 'DM Sans', sans-serif;
 }
-.lesson-btn:hover { border-color: rgba(201,169,110,0.4); color: var(--gold); }
-.lesson-btn.selected { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
-.lesson-btn .lesson-num { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 3px; opacity: 0.7; }
-.lesson-btn .lesson-name { font-size: 11px; font-weight: 400; line-height: 1.4; }
+.lesson-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
+.lesson-btn.selected { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
+.lesson-btn .lesson-num { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2px; opacity: 0.65; }
+.lesson-btn .lesson-name { font-size: 11px; font-weight: 400; line-height: 1.35; }
 
 .start-btn {
-  width: 100%; margin-top: 20px;
-  background: var(--gold); border: none; border-radius: 2px;
-  color: var(--charcoal); font-family: 'Inter', sans-serif;
-  font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
-  text-transform: uppercase; padding: 13px;
-  cursor: pointer; transition: opacity 0.2s;
+  width: 100%; margin-top: 18px;
+  background: var(--accent); border: none; border-radius: 8px;
+  color: #fff; font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+  padding: 13px; cursor: pointer; transition: background 0.2s;
 }
-.start-btn:hover { opacity: 0.88; }
-.start-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.start-btn:hover { background: var(--accent-2); }
+.start-btn:disabled { background: var(--bg-4); color: var(--text-muted); cursor: not-allowed; }
+
+#main-app { width: 100%; height: 100vh; display: none; flex-direction: column; align-items: center; background: var(--bg); }
 
 header {
-  width: 100%; text-align: center;
-  padding: 18px 24px 14px;
-  border-bottom: 1px solid rgba(201,169,110,0.08);
-  flex-shrink: 0; background: var(--charcoal);
+  width: 100%; background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
-.orchid-icon { font-size: 13px; margin-bottom: 5px; opacity: 0.7; }
-header h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(14px, 3.5vw, 19px); font-weight: 500;
-  letter-spacing: 0.2em; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 2px;
+.header-left { display: flex; align-items: center; gap: 10px; }
+.header-leaf { font-size: 18px; }
+.header-titles h1 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; color: var(--accent); line-height: 1.2; }
+.header-titles .lesson-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; }
+
+.new-lesson-btn {
+  background: none; border: 1px solid var(--border-2);
+  border-radius: 6px; color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
+  padding: 6px 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
-.lesson-indicator { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
-.divider { width: 24px; height: 1px; background: linear-gradient(90deg,transparent,var(--gold),transparent); margin: 10px auto 0; }
+.new-lesson-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+#pronun-bar {
+  width: 100%; max-width: 600px; flex-shrink: 0;
+  background: var(--accent-light); border-bottom: 1px solid rgba(45,106,79,0.15);
+  padding: 10px 16px; display: none;
+}
+.pronun-bar-inner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pronun-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; }
+.pronun-words { display: flex; gap: 6px; flex-wrap: wrap; }
+.pronun-word {
+  background: var(--bg-2); border: 1.5px solid var(--border-2);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 12px; font-weight: 500; color: var(--text);
+  cursor: pointer; transition: all 0.18s;
+}
+.pronun-word:hover { border-color: var(--accent); color: var(--accent); }
+.pronun-word.testing { border-color: var(--warning); background: #fef9f0; color: var(--warning); }
+.pronun-word.passed { border-color: var(--success); background: #f0faf4; color: var(--success); }
+.pronun-word.failed { border-color: var(--error); background: #fdf0f0; color: var(--error); }
+.pronun-hint { font-size: 10px; color: var(--text-muted); font-style: italic; }
 
 #chat-scroll {
-  flex: 1; width: 100%; max-width: 540px;
-  overflow-y: auto; padding: 18px 16px 10px;
-  display: flex; flex-direction: column; gap: 12px;
+  flex: 1; width: 100%; max-width: 600px;
+  overflow-y: auto; padding: 20px 16px 12px;
+  display: flex; flex-direction: column; gap: 14px;
 }
-#chat-scroll::-webkit-scrollbar { width: 2px; }
-#chat-scroll::-webkit-scrollbar-thumb { background: rgba(201,169,110,0.12); border-radius: 2px; }
+#chat-scroll::-webkit-scrollbar { width: 3px; }
+#chat-scroll::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 3px; }
 
-.empty-state {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 8px; opacity: 0.25; pointer-events: none;
-}
-.empty-state .ei { font-size: 22px; }
-.empty-state p { font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 0.12em; color: var(--gold); }
+.empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; opacity: 0.4; pointer-events: none; padding: 40px 0; }
+.empty-state span { font-size: 32px; }
+.empty-state p { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--text-muted); }
 
 .msg-row { display: flex; flex-direction: column; gap: 3px; animation: fadeUp 0.2s ease-out; }
 .msg-row.user { align-items: flex-end; }
 .msg-row.assistant { align-items: flex-start; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);} }
 
-@keyframes fadeUp { from { opacity:0; transform:translateY(6px);} to {opacity:1;transform:translateY(0);} }
+.role-label { font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); padding: 0 4px; }
 
-.role-label { font-size: 8px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); padding: 0 3px; }
-
-.bubble {
-  max-width: 85%; padding: 10px 13px; border-radius: 2px;
-  font-size: 13px; font-weight: 300; line-height: 1.7; letter-spacing: 0.02em;
-}
-.bubble.user { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold-light); border-bottom-right-radius: 0; }
-.bubble.assistant { background: var(--charcoal-3); border: 1px solid rgba(201,169,110,0.1); color: var(--text-body); border-bottom-left-radius: 0; }
+.bubble { max-width: 84%; padding: 11px 14px; border-radius: 12px; font-size: 13.5px; font-weight: 400; line-height: 1.65; color: var(--text); }
+.bubble.user { background: var(--accent); color: #fff; border-bottom-right-radius: 3px; }
+.bubble.assistant { background: var(--bg-2); border: 1px solid var(--border); border-bottom-left-radius: 3px; box-shadow: var(--shadow); }
 
 .bubble-row { display: flex; align-items: flex-end; gap: 6px; }
 .speak-btn {
-  flex-shrink: 0; width: 24px; height: 24px;
-  background: none; border: 1px solid rgba(201,169,110,0.2);
+  flex-shrink: 0; width: 26px; height: 26px;
+  background: var(--bg-2); border: 1px solid var(--border-2);
   border-radius: 50%; cursor: pointer; color: var(--text-muted);
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s; margin-bottom: 2px;
+  transition: all 0.2s; margin-bottom: 1px; box-shadow: var(--shadow);
 }
-.speak-btn:hover { border-color: var(--gold); color: var(--gold); }
-.speak-btn.playing { border-color: var(--gold); color: var(--gold); animation: pulse 1s ease infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+.speak-btn:hover { border-color: var(--accent); color: var(--accent); }
+.speak-btn.playing { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
-.typing-indicator {
-  display: flex; align-items: center; gap: 4px;
-  padding: 11px 13px; background: var(--charcoal-3);
-  border: 1px solid rgba(201,169,110,0.1); border-radius: 2px; border-bottom-left-radius: 0; width: fit-content;
+.thinking-row { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.thinking-bubble {
+  background: var(--bg-2); border: 1px solid var(--border);
+  border-radius: 12px; border-bottom-left-radius: 3px;
+  padding: 12px 16px; box-shadow: var(--shadow);
+  display: flex; align-items: center; gap: 8px;
 }
-.typing-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); animation: typingDot 1.2s ease infinite; }
-.typing-dot:nth-child(2) { animation-delay:.16s; }
-.typing-dot:nth-child(3) { animation-delay:.32s; }
-@keyframes typingDot { 0%,80%,100%{opacity:.2;transform:translateY(0);} 40%{opacity:1;transform:translateY(-3px);} }
+.thinking-text { font-size: 12px; color: var(--text-muted); font-style: italic; }
+.thinking-dots { display: flex; gap: 3px; }
+.t-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.3; animation: tDot 1.2s ease infinite; }
+.t-dot:nth-child(2){animation-delay:.2s;}
+.t-dot:nth-child(3){animation-delay:.4s;}
+@keyframes tDot{0%,80%,100%{opacity:0.2;transform:scale(1);}40%{opacity:1;transform:scale(1.2);}}
 
 #input-panel {
-  width: 100%; max-width: 540px; flex-shrink: 0;
-  background: var(--charcoal-2);
-  border-top: 1px solid rgba(201,169,110,0.1);
-  padding: 14px 16px 20px;
+  width: 100%; max-width: 600px; flex-shrink: 0;
+  background: var(--bg-2); border-top: 1px solid var(--border);
+  padding: 12px 16px 20px; box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
 }
 
-.controls-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.mode-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 
-.toggle-track {
-  display: flex; background: var(--charcoal-3);
-  border: 1px solid rgba(201,169,110,0.15); border-radius: 2px; overflow: hidden; flex-shrink: 0;
-}
-.toggle-btn {
-  padding: 5px 14px; font-family: 'Inter', sans-serif;
-  font-size: 9px; font-weight: 500; letter-spacing: 0.16em;
-  text-transform: uppercase; border: none; cursor: pointer;
-  transition: all 0.2s; background: transparent; color: var(--text-muted);
-}
-.toggle-btn.active { background: var(--gold); color: var(--charcoal); }
+.toggle-track { display: flex; background: var(--bg-3); border: 1px solid var(--border-2); border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+.toggle-btn { padding: 6px 16px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; border: none; cursor: pointer; transition: all 0.18s; background: transparent; color: var(--text-muted); }
+.toggle-btn.active { background: var(--accent); color: #fff; border-radius: 7px; }
 
-.lang-select {
-  flex: 1; background: var(--charcoal-3);
-  border: 1px solid rgba(201,169,110,0.15); border-radius: 2px;
-  color: var(--text-muted); font-family: 'Inter', sans-serif;
-  font-size: 10px; padding: 5px 8px; cursor: pointer; outline: none; appearance: none;
-}
-
-.new-lesson-btn {
-  background: none; border: 1px solid rgba(201,169,110,0.2);
-  border-radius: 2px; color: var(--text-muted);
-  font-family: 'Inter', sans-serif; font-size: 9px;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 5px 10px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
-  flex-shrink: 0;
-}
-.new-lesson-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-#voice-ui { display: flex; flex-direction: column; align-items: center; }
+#voice-ui { display: flex; flex-direction: column; align-items: center; padding: 4px 0; }
 #type-ui { display: none; }
 
-.mic-wrapper {
-  position: relative; width: 80px; height: 80px;
-  display: flex; align-items: center; justify-content: center; margin-bottom: 4px;
-}
+.mic-outer { position: relative; width: 76px; height: 76px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
 .arc-svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
 .mic-btn {
-  position: relative; z-index: 2; width: 56px; height: 56px;
-  border-radius: 50%; border: 1.5px solid rgba(201,169,110,0.3);
-  background: transparent; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  outline: none; color: var(--gold); transition: all 0.3s;
+  position: relative; z-index: 2; width: 54px; height: 54px; border-radius: 50%;
+  border: 2px solid var(--border-2); background: var(--bg-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  outline: none; color: var(--accent); transition: all 0.25s; box-shadow: var(--shadow);
 }
-.mic-btn:hover { border-color: var(--gold); background: var(--gold-dim); }
-.mic-btn.recording { border-color: var(--gold); background: var(--gold-dim); color: var(--gold-light); }
-.mic-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.mic-btn:hover { border-color: var(--accent); background: var(--accent-dim); box-shadow: var(--shadow-lg); }
+.mic-btn.recording { border-color: var(--error); background: #fdf0f0; color: var(--error); box-shadow: 0 0 0 6px rgba(192,57,43,0.08); }
+.mic-btn:disabled { opacity: 0.38; cursor: not-allowed; box-shadow: none; }
 
-.pulse-ring { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--gold); animation: pulseRing 1.6s ease-out infinite; pointer-events: none; display: none; }
-.pulse-ring.active { display: block; }
-.pulse-ring:nth-child(2) { animation-delay: 0.55s; }
-@keyframes pulseRing { 0%{transform:scale(1);opacity:.6;} 100%{transform:scale(1.5);opacity:0;} }
+.pulse-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--error); animation: pRing 1.6s ease-out infinite; pointer-events: none; display: none; }
+.pulse-ring.on { display: block; }
+.pulse-ring:nth-child(2){animation-delay:.55s;}
+@keyframes pRing{0%{transform:scale(1);opacity:.5;}100%{transform:scale(1.55);opacity:0;}}
 
-.countdown { font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--text-muted); height: 15px; text-align: center; }
+.countdown { font-size: 11px; color: var(--text-muted); height: 15px; text-align: center; font-weight: 500; }
+.waveform { width: 100%; height: 26px; display: flex; align-items: center; justify-content: center; gap: 2px; margin: 5px 0 2px; }
+.wave-bar { width: 2.5px; border-radius: 3px; background: var(--accent); min-height: 3px; opacity: 0.2; transition: height 0.08s ease-out; }
+.wave-bar.on { opacity: 1; }
 
-.waveform { width: 100%; height: 28px; display: flex; align-items: center; justify-content: center; gap: 2px; margin: 6px 0 2px; }
-.wave-bar { width: 2px; border-radius: 2px; background: var(--gold); min-height: 3px; opacity: 0.15; transition: height 0.08s ease-out; }
-.wave-bar.active { opacity: 1; }
-
-.status-text { font-size: 10px; color: var(--text-muted); text-align: center; margin-top: 4px; min-height: 14px; letter-spacing: 0.06em; }
-.status-text.error { color: var(--error); }
-
-.try-again-btn { background: none; border: none; color: var(--gold); font-family: 'Inter', sans-serif; font-size: 10px; cursor: pointer; text-decoration: underline; margin-top: 4px; padding: 0; display: none; }
+.status-text { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 3px; min-height: 15px; }
+.status-text.err { color: var(--error); }
+.try-again-btn { background: none; border: none; color: var(--accent); font-family: 'DM Sans', sans-serif; font-size: 11px; cursor: pointer; text-decoration: underline; margin-top: 3px; padding: 0; display: none; font-weight: 500; }
 
 .type-row { display: flex; gap: 8px; align-items: flex-end; }
 .text-input {
-  flex: 1; background: var(--charcoal-3);
-  border: 1px solid rgba(201,169,110,0.2); border-radius: 2px;
-  color: var(--gold-light); font-family: 'Inter', sans-serif;
-  font-size: 13px; font-weight: 300; line-height: 1.6;
-  padding: 9px 11px; resize: none; outline: none;
-  min-height: 40px; max-height: 100px; transition: border-color 0.2s;
+  flex: 1; background: var(--bg); border: 1px solid var(--border-2);
+  border-radius: 10px; color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; line-height: 1.55; padding: 10px 13px; resize: none;
+  outline: none; min-height: 42px; max-height: 100px; transition: border-color 0.2s;
 }
-.text-input::placeholder { color: rgba(201,169,110,0.2); }
-.text-input:focus { border-color: rgba(201,169,110,0.4); }
+.text-input:focus { border-color: var(--accent); }
+.text-input::placeholder { color: var(--text-muted); }
 .text-input:disabled { opacity: 0.4; }
 
 .send-btn {
-  width: 40px; height: 40px; flex-shrink: 0;
-  background: var(--gold); border: 1px solid var(--gold);
-  border-radius: 2px; color: var(--charcoal);
+  width: 42px; height: 42px; flex-shrink: 0; background: var(--accent);
+  border: none; border-radius: 10px; color: #fff;
   cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
 }
-.send-btn:disabled { background: transparent; border-color: rgba(201,169,110,0.2); color: var(--text-muted); cursor: not-allowed; }
+.send-btn:hover { background: var(--accent-2); }
+.send-btn:disabled { background: var(--bg-4); color: var(--text-muted); cursor: not-allowed; }
+
+#pronun-mode-banner {
+  display: none; background: #fff8f0; border: 1.5px solid var(--warning);
+  border-radius: 8px; padding: 10px 14px; margin-bottom: 10px;
+  font-size: 12px; color: var(--warning); font-weight: 500; text-align: center;
+}
 </style>
 </head>
 <body>
 
 <div id="setup-screen">
   <div class="setup-logo">
-    <div class="icon">✦</div>
+    <span class="leaf">🌿</span>
     <h1>The Orchid Pavilion</h1>
     <p>Staff English Training</p>
   </div>
   <div class="setup-card">
     <h2>Begin Your Training Session</h2>
-    <div class="field">
-      <label>Your Name</label>
-      <input type="text" id="staff-name" placeholder="Enter your name..." />
-    </div>
-    <div class="field">
-      <label>Anthropic API Key</label>
-      <input type="password" id="anthropic-key" placeholder="sk-ant-..." />
-    </div>
-    <div class="field">
-      <label>OpenAI API Key (for voice)</label>
-      <input type="password" id="openai-key" placeholder="sk-proj-..." />
-    </div>
-    <div class="field">
-      <label>Select Your Lesson</label>
-      <div class="lesson-grid" id="lesson-grid"></div>
-    </div>
+    <div class="field"><label>Your Name</label><input type="text" id="staff-name" placeholder="Enter your name..." /></div>
+    <div class="field"><label>Anthropic API Key</label><input type="password" id="anthropic-key" placeholder="sk-ant-..." /></div>
+    <div class="field"><label>OpenAI API Key (voice)</label><input type="password" id="openai-key" placeholder="sk-proj-..." /></div>
+    <div class="field"><label>Select Your Lesson</label><div class="lesson-grid" id="lesson-grid"></div></div>
     <button class="start-btn" id="start-btn" onclick="startSession()" disabled>Begin Session</button>
   </div>
 </div>
 
-<div id="main-app" style="display:none; width:100%; height:100%; flex-direction:column; align-items:center;">
+<div id="main-app">
   <header>
-    <div class="orchid-icon">✦</div>
-    <h1>The Orchid Pavilion</h1>
-    <div class="lesson-indicator" id="lesson-indicator">Loading...</div>
-    <div class="divider"></div>
+    <div class="header-left">
+      <div class="header-leaf">🌿</div>
+      <div class="header-titles">
+        <h1>The Orchid Pavilion</h1>
+        <div class="lesson-tag" id="lesson-tag">Loading...</div>
+      </div>
+    </div>
+    <button class="new-lesson-btn" onclick="newLesson()">Change Lesson</button>
   </header>
-  <div id="chat-scroll">
-    <div class="empty-state" id="empty-state">
-      <div class="ei">✦</div>
-      <p>Session starting...</p>
+
+  <div id="pronun-bar">
+    <div class="pronun-bar-inner">
+      <span class="pronun-label">🎯 Pronunciation</span>
+      <div class="pronun-words" id="pronun-words"></div>
+      <span class="pronun-hint">Tap a word to test it</span>
     </div>
   </div>
+
+  <div id="chat-scroll">
+    <div class="empty-state" id="empty-state"><span>🌿</span><p>Starting your session...</p></div>
+  </div>
+
   <div id="input-panel">
-    <div class="controls-row">
+    <div id="pronun-mode-banner"></div>
+    <div class="mode-row">
       <div class="toggle-track">
         <button class="toggle-btn active" id="btn-voice" onclick="setMode('voice')">Voice</button>
         <button class="toggle-btn" id="btn-type" onclick="setMode('type')">Type</button>
       </div>
-      <select class="lang-select" id="lang-select">
-        <option value="vi">Vietnamese</option>
-        <option value="en">English</option>
-        <option value="">Auto</option>
-      </select>
-      <button class="new-lesson-btn" onclick="newLesson()">New Lesson</button>
     </div>
+
     <div id="voice-ui">
-      <div class="mic-wrapper">
-        <div class="pulse-ring" id="pulse1"></div>
-        <div class="pulse-ring" id="pulse2"></div>
-        <svg class="arc-svg" viewBox="0 0 80 80" id="arc-svg">
-          <circle cx="40" cy="40" r="35" fill="none" stroke="rgba(201,169,110,0.1)" stroke-width="1.5"/>
-          <path id="arc-path" fill="none" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" d=""/>
+      <div class="mic-outer">
+        <div class="pulse-ring" id="p1"></div>
+        <div class="pulse-ring" id="p2"></div>
+        <svg class="arc-svg" viewBox="0 0 76 76">
+          <circle cx="38" cy="38" r="33" fill="none" stroke="var(--bg-3)" stroke-width="2"/>
+          <path id="arc-path" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" d=""/>
         </svg>
         <button class="mic-btn" id="mic-btn" onclick="handleMicClick()">
-          <svg id="mic-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <svg id="mic-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
             <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/>
-            <path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </button>
       </div>
@@ -341,14 +322,15 @@ header h1 {
       <div class="status-text" id="status-text">Tap the microphone to speak</div>
       <button class="try-again-btn" id="try-again-btn" onclick="resetVoice()">Try again</button>
     </div>
+
     <div id="type-ui">
       <div class="type-row">
         <textarea class="text-input" id="text-input" placeholder="Type your message..." rows="1"
           onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
         <button class="send-btn" id="send-btn" onclick="handleTypeSubmit()" disabled>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <path d="M22 2L11 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
       </div>
@@ -358,22 +340,26 @@ header h1 {
 
 <script>
 const LESSONS = [
-  { id:'M1L1', module:1, lesson:1, name:'Welcoming Guests', focus:'Greet guests, check reservations, guide to table. Key vocab: menu, reservation, booth, high chair, cutlery, place setting.', brandOverrides:['NEVER say "Good evening, can I help you?" — ALWAYS say "Good evening. Welcome to The Orchid Pavilion. My name is [Name] and I will be taking care of you tonight."','NEVER say "Follow me" alone — ALWAYS say "Right this way, please."','When seating: "Here is your table. I hope you enjoy the view this evening. May I bring you still or sparkling water while you look over our menu?"'], viPronunciation:['reservation','pavilion','welcome'], phonetic:['res-er-VA-tion','pa-VIL-ion','WEL-come'] },
-  { id:'M1L2', module:1, lesson:2, name:'Welcoming Guests (Extended)', focus:'Extended arrival phrases, handling missing reservations, offering alternatives. Phrases: "Welcome back! Lovely to see you.", "Could I take the name on your reservation?", "I wasn\'t able to find a booking under that name."', brandOverrides:['NEVER say "I can\'t find your booking" — ALWAYS say "I\'m afraid I\'m not able to locate that reservation. Would you mind if I just take one moment to check?"','NEVER say "Wait" — ALWAYS say "Just one moment, please."'], viPronunciation:['reservation','available','alternative'], phonetic:['res-er-VA-tion','a-VAIL-a-ble','al-TER-na-tive'] },
-  { id:'M1L3', module:1, lesson:3, name:'Seating Guests', focus:'Seating preferences, wheelchair access, window seats, indoor/outdoor, wait times.', brandOverrides:['NEVER say "That table is taken" — ALWAYS say "I\'m afraid that table is currently occupied."','NEVER say "You\'ll have to wait" — ALWAYS say "The wait for that table is approximately [X] minutes. Shall I arrange a drink for you at the bar while you wait?"'], viPronunciation:['wheelchair','outdoor','preference'], phonetic:['WHEEL-chair','OUT-door','PREF-er-ence'] },
-  { id:'M1L4', module:1, lesson:4, name:'Small Talk With Guests', focus:'Light conversation: weather, local sights, celebrations, returning guests.', brandOverrides:['Small talk must feel natural and warm — never scripted or rushed.','ALWAYS listen to the guest\'s answer and respond genuinely before moving on.','If a guest mentions a celebration: "Congratulations! Please allow us to make this evening extra special for you."'], viPronunciation:['celebrating','anniversary','visiting'], phonetic:['SEL-e-brate-ing','an-NIV-er-sa-ry','VIS-it-ing'] },
-  { id:'M2L1', module:2, lesson:1, name:'Offering the Menu', focus:'Presenting menus, offering drinks first, describing specials.', brandOverrides:['ALWAYS offer still or sparkling water immediately on seating: "May I bring you still or sparkling water while you look over our menu?"','When describing specials, use sensory language.','NEVER say "Do you want to order?" — ALWAYS say "Are you ready to order, or would you like a few more minutes?"'], viPronunciation:['sparkling','menu','special'], phonetic:['SPAR-kling','MEN-you','SPESH-al'] },
-  { id:'M2L2', module:2, lesson:2, name:'Taking Food Orders', focus:'Starters, mains, sides, dietary preferences, steak doneness. Brand menu: Seared Scallops, Crispy Sea Bass, Slow-Roasted Lamb, Fresh Truffle Pasta, Grilled Lobster Thermidor.', brandOverrides:['ALWAYS describe dishes using: [Protein] + [Cooking Method] + [Texture/Flavor].','Lobster Thermidor upsell: "The Grilled Lobster Thermidor is our signature dish — many guests tell us it is the finest lobster they have had in Vietnam."','NEVER say "Good choice" — ALWAYS say "Excellent choice" or "A wonderful selection."'], viPronunciation:['scallops','truffle','lobster'], phonetic:['SKAL-opz','TRUF-ul','LOB-ster'] },
-  { id:'M2L3', module:2, lesson:3, name:'Taking Drink Orders', focus:'Water, wine, beer, cocktails, hot drinks. Wine pairing, upselling to a bottle.', brandOverrides:['Wine pairing: "May I suggest a glass of our Sancerre Blanc? It pairs beautifully with the Seared Scallops."','Bottle upsell: "Since you\'re both having wine this evening, a bottle would be a wonderful value."','NEVER say "We don\'t have that wine" — ALWAYS say "I\'m afraid that wine is no longer available. May I suggest something equally lovely?"'], viPronunciation:['sparkling','Sancerre','champagne'], phonetic:['SPAR-kling','san-SAIR','sham-PAIN'] },
-  { id:'M2L4', module:2, lesson:4, name:'Confirming the Order', focus:'Repeating orders back clearly, checking for errors, special requests.', brandOverrides:['ALWAYS confirm the full order before leaving the table.','For special requests: "Of course. I will personally ensure the kitchen is aware."','After confirming: "Thank you. I will have that with you shortly."'], viPronunciation:['confirm','certainly','absolutely'], phonetic:['con-FIRM','SER-ten-lee','ab-SO-lute-lee'] },
-  { id:'M3L1', module:3, lesson:1, name:'Dietary Requirements', focus:'Allergies, vegan, vegetarian, gluten-free, halal, nut-free.', brandOverrides:['NEVER guess about allergies. ALWAYS say: "I want to give you completely accurate information. Please allow me one moment to check with our chef."','For allergies: "We take food allergies very seriously at The Orchid Pavilion."','NEVER say "I think it\'s okay" — say "Let me confirm with the kitchen to be absolutely certain."'], viPronunciation:['vegetarian','allergy','gluten'], phonetic:['vej-e-TAIR-ee-an','AL-er-jee','GLOO-ten'] },
-  { id:'M3L3', module:3, lesson:3, name:'Responding to Complaints', focus:'The 5-Step Recovery Protocol: Acknowledge, Act, Return, Follow up, Escalate.', brandOverrides:['Step 1: "I completely understand, and I sincerely apologise. That is not the standard we hold at The Orchid Pavilion."','Step 2: "Please allow me to speak with our chef personally. I will return to you in just a few moments."','Step 3: "Thank you so much for your patience. We are preparing a fresh [dish] for you right now."','NEVER say "Sorry, sorry!" — ALWAYS say "I sincerely apologise for the inconvenience."'], viPronunciation:['apologise','inconvenience','patience'], phonetic:['a-POL-o-jize','in-con-VEE-nee-ence','PAY-shence'] },
-  { id:'M4L1', module:4, lesson:1, name:'Presenting the Bill', focus:'Presenting bill politely, split payments, contactless, receipt. Dessert upsell before bill.', brandOverrides:['Dessert upsell: "Before I bring your bill, may I tempt you with our Crème Brûlée? The caramel is torched at your table."','NEVER say "Here\'s your bill" abruptly — ALWAYS say "Whenever you are ready, I have your bill here for you."'], viPronunciation:['receipt','contactless','brûlée'], phonetic:['re-SEET','CON-tact-less','broo-LAY'] },
-  { id:'M4L4', module:4, lesson:4, name:'Professional Farewells', focus:'Warm goodbyes, encouraging return visits.', brandOverrides:['NEVER say "Bye bye!" — ALWAYS say "Thank you for dining with us. We hope to welcome you again soon."','NEVER say "No problem" — ALWAYS say "It was my pleasure."','For special occasions: "It was truly an honour to be part of your celebration this evening."'], viPronunciation:['pleasure','honour','welcome'], phonetic:['PLEZH-er','ON-er','WEL-come'] }
+  { id:'M1L1', module:1, lesson:1, name:'Welcoming Guests', focus:'Greeting guests on arrival, checking reservations, guiding to the table. Key vocabulary: menu, reservation, booth, high chair, cutlery, place setting, water jug.', brandOverrides:['Standard greeting: "Good evening. Welcome to The Orchid Pavilion. My name is [Name] and I will be taking care of you tonight. Do you have a reservation with us this evening?" — NOT "Good evening, can I help you?"','When leading guests: "Right this way, please." — NOT just "Follow me"','When seating: "Here is your table. I hope you enjoy the view this evening. May I bring you still or sparkling water while you look over our menu?"'], viPronunciation:['reservation','pavilion','welcome'], phonetic:['res-er-VA-tion','pa-VIL-ion','WEL-kum'] },
+  { id:'M1L2', module:1, lesson:2, name:'Welcoming Guests (Extended)', focus:'Extended arrival phrases, handling missing reservations politely, offering seating alternatives. Key phrases: "Welcome back! Lovely to see you.", "Could I take the name on your reservation?", "I was not able to find a booking under that name."', brandOverrides:['Missing reservation: "I am afraid I am not able to locate that reservation. Would you mind if I take just one moment to check?" — NEVER say "I cannot find your booking"','Offering alternatives: "We have a table available at the bar, or one opening shortly in the dining room."','NEVER say "Wait" alone — ALWAYS say "Just one moment, please."'], viPronunciation:['reservation','available','alternative'], phonetic:['res-er-VA-tion','a-VAIL-a-bul','al-TER-na-tiv'] },
+  { id:'M1L3', module:1, lesson:3, name:'Seating Guests', focus:'Seating preferences, wheelchair access, window seats, indoor and outdoor seating, wait times, special requests. Key vocab: window seat, available, occupied, wheelchair accessible, quiet area, fully booked.', brandOverrides:['Occupied table: "I am afraid that table is currently occupied." — NEVER say "That table is taken"','Wait time: "The wait for that table is approximately 20 minutes. May I arrange a drink for you at the bar while you wait?"','Seating confirmation: "Here is your table. Please let me know if you would prefer a different position."'], viPronunciation:['wheelchair','available','preference'], phonetic:['WHEEL-chair','a-VAIL-a-bul','PREF-er-ens'] },
+  { id:'M1L4', module:1, lesson:4, name:'Small Talk With Guests', focus:'Light polite conversation: weather, local sights, visits from out of town, celebrations, returning guests.', brandOverrides:['Small talk must feel genuinely warm — never scripted or rushed','ALWAYS listen and respond to the guest answer before moving on','For celebrations: "Congratulations! Please allow us to make this evening extra special for you."','For returning guests: "Welcome back! It is wonderful to see you again."'], viPronunciation:['celebrating','anniversary','visiting'], phonetic:['SEL-e-bray-ting','an-NIV-er-sree','VIZ-it-ing'] },
+  { id:'M2L1', module:2, lesson:1, name:'Offering the Menu', focus:'Presenting menus, offering drinks on arrival, describing daily specials using sensory language.', brandOverrides:['Water on arrival: "May I bring you still or sparkling water while you look over our menu?" — this must happen immediately on seating','Describing specials: use sensory words — flaky, moist, delicate, rich, crispy','Asking to order: "Are you ready to order, or would you like a few more minutes?" — NEVER "Do you want to order?"'], viPronunciation:['sparkling','special','menu'], phonetic:['SPAR-kling','SPESH-ul','MEN-yoo'] },
+  { id:'M2L2', module:2, lesson:2, name:'Taking Food Orders', focus:'Starters, mains, sides, cooking preferences, dietary needs. Brand menu: Seared Scallops, Crispy Soft-Shell Crab, Fresh Truffle Bruschetta, Crispy Sea Bass, Slow-Roasted Lamb Shoulder, Fresh Truffle Pasta, Grilled Lobster Thermidor.', brandOverrides:['Dish description formula: protein + cooking method + texture or flavor','Lobster Thermidor upsell: "The Grilled Lobster Thermidor is our signature dish. Many guests tell us it is the finest lobster they have had in Vietnam."','Order acknowledgement: "Excellent choice" or "A wonderful selection" — NEVER just "Good choice"'], viPronunciation:['scallops','truffle','lobster'], phonetic:['SKAL-ups','TRUF-ul','LOB-ster'] },
+  { id:'M2L3', module:2, lesson:3, name:'Taking Drink Orders', focus:'Water, wine, beer, cocktails, hot beverages. Wine pairing language, upselling to a bottle.', brandOverrides:['Wine pairing: "May I suggest a glass of our Sancerre Blanc? It pairs beautifully with the Seared Scallops."','Bottle upsell: "Since you are both enjoying wine this evening, a bottle would be wonderful value. Shall I bring one to the table?"','Unavailable wine: "I am afraid that wine is no longer available. May I suggest something equally lovely?"'], viPronunciation:['sparkling','Sancerre','champagne'], phonetic:['SPAR-kling','san-SAIR','sham-PAIN'] },
+  { id:'M2L4', module:2, lesson:4, name:'Confirming the Order', focus:'Repeating the full order back clearly before leaving the table. Confirming special requests and modifications.', brandOverrides:['ALWAYS confirm the complete order before leaving the table','Special requests: "Of course. I will personally ensure the kitchen is fully aware."','After confirming: "Thank you. I will have everything with you shortly."'], viPronunciation:['confirm','certainly','absolutely'], phonetic:['kun-FIRM','SUR-ten-lee','ab-SO-loot-lee'] },
+  { id:'M3L1', module:3, lesson:1, name:'Dietary Requirements', focus:'Allergies, vegan, vegetarian, gluten-free, halal, nut-free, lactose intolerant. Safe language for handling food restrictions.', brandOverrides:['Allergy response: "I want to give you completely accurate information. Please allow me one moment to check with our chef." — NEVER guess','Preparing the dish: "We take food allergies very seriously at The Orchid Pavilion. Your dish will be prepared in a dedicated area."','NEVER say "I think it is okay" — always confirm with the kitchen first'], viPronunciation:['vegetarian','allergy','gluten'], phonetic:['vej-e-TAIR-ee-un','AL-er-jee','GLOO-ten'] },
+  { id:'M3L2', module:3, lesson:2, name:'Handling Special Requests', focus:'Modifications to orders, substitutions, additions, removing ingredients, sauce on the side.', brandOverrides:['For substitutions: "Certainly, I would be happy to arrange that for you." — make every request feel easy','If unsure: "Let me check with the kitchen to ensure we can do that perfectly for you."','Upcharge: "Yes, we can do that. There is a small additional charge of [amount]. Is that quite alright?"'], viPronunciation:['substitute','certainly','preference'], phonetic:['SUB-stit-yoot','SUR-ten-lee','PREF-er-ens'] },
+  { id:'M3L3', module:3, lesson:3, name:'Responding to Complaints', focus:'The 5-Step Recovery Protocol: Acknowledge, Act, Return, Follow up, Escalate. Scenarios: cold food, wrong order, long wait, noise complaints.', brandOverrides:['Step 1 Acknowledge: "I completely understand, and I sincerely apologise. That is not the standard we hold at The Orchid Pavilion."','Step 2 Act: "Please allow me to speak with our chef personally. I will return to you in just a few moments."','Step 3 Return: "Thank you so much for your patience. We are preparing a fresh dish for you right now. It will be with you in approximately [specific time]."','NEVER say "Sorry, sorry!" — ALWAYS say "I sincerely apologise for the inconvenience."'], viPronunciation:['apologise','inconvenience','patience'], phonetic:['a-POL-o-jize','in-kun-VEEN-yens','PAY-shens'] },
+  { id:'M3L4', module:3, lesson:4, name:'Ensuring Guest Satisfaction', focus:'Checking in after serving food and after resolving problems. Following up at the right moment.', brandOverrides:['Check-in: "How is everything tasting for you this evening?" — NEVER "Is everything okay?"','After complaint resolution: "I wanted to personally check that everything is to your satisfaction. It truly means a great deal to us."','Return within 5 minutes of a replacement dish being served'], viPronunciation:['satisfaction','personally','wonderful'], phonetic:['sat-is-FAK-shun','PUR-sun-a-lee','WUN-der-ful'] },
+  { id:'M4L1', module:4, lesson:1, name:'Presenting the Bill', focus:'Presenting the bill politely, split payments, contactless, receipts. Dessert and coffee upsell before the bill.', brandOverrides:['Dessert upsell: "Before I bring your bill, may I tempt you with our Creme Brulee? The caramel sugar is torched fresh at your table."','Presenting the bill: "Whenever you are ready, I have your bill here for you." — NEVER just say "Here is your bill"','NEVER ask "Do you want dessert?" — always offer something specific with a description'], viPronunciation:['receipt','contactless','brulee'], phonetic:['re-SEET','KON-takt-les','broo-LAY'] },
+  { id:'M4L2', module:4, lesson:2, name:'Handling Payment Issues', focus:'Card declined, incorrect bill, cash payments, requesting a new receipt. Professional language for handling payment problems discreetly.', brandOverrides:['Card declined: "I am sorry, it appears the card did not go through. Would you like to try another card, or would cash be more convenient?" — handle quietly','Bill query: "Of course. Let me double-check the total for you right away."','After resolving: "Thank you so much for your patience. Everything is now in order."'], viPronunciation:['payment','declined','apologise'], phonetic:['PAY-ment','de-KLIND','a-POL-o-jize'] },
+  { id:'M4L3', module:4, lesson:3, name:'Receiving Feedback', focus:'Responding to both positive and critical feedback professionally. Thanking guests, passing feedback to the team, using feedback constructively.', brandOverrides:['Positive feedback: "That is so wonderful to hear. I will make sure to pass your kind words to the entire team."','Critical feedback: "Thank you sincerely for letting us know. We always want to do better, and your honesty truly helps us improve."','NEVER be defensive about critical feedback — treat it as a gift'], viPronunciation:['feedback','appreciate','improve'], phonetic:['FEED-bak','a-PREE-shee-ate','im-PROOV'] },
+  { id:'M4L4', module:4, lesson:4, name:'Professional Farewells', focus:'Warm professional goodbyes that leave a lasting positive impression. Encouraging return visits.', brandOverrides:['Standard farewell: "Thank you for dining with us. We hope to welcome you again very soon." — NEVER say "Bye bye!"','Response to thanks: "It was my pleasure." — NEVER say "No problem"','For special occasions: "It was truly an honour to be part of your celebration this evening."'], viPronunciation:['pleasure','honour','farewell'], phonetic:['PLEZH-er','ON-er','FAIR-wel'] }
 ];
 
-let anthropicKey = localStorage.getItem('op_anthropic') || '';
-let openaiKey = localStorage.getItem('op_openai') || '';
+let anthropicKey = localStorage.getItem('op_ant') || '';
+let openaiKey = localStorage.getItem('op_oai') || '';
 let staffName = localStorage.getItem('op_name') || '';
 let selectedLesson = null;
 let chatHistory = [];
@@ -389,161 +375,212 @@ let analyser = null;
 let isWaiting = false;
 let waveBarEls = [];
 let currentAudio = null;
-const MAX_SECONDS = 45;
+let pronunTestWord = null;
+const MAX_SECS = 45;
 
 function buildLessonGrid() {
   const grid = document.getElementById('lesson-grid');
   grid.innerHTML = '';
-  LESSONS.forEach(lesson => {
+  LESSONS.forEach(l => {
     const btn = document.createElement('button');
     btn.className = 'lesson-btn';
-    btn.dataset.id = lesson.id;
-    btn.innerHTML = `<div class="lesson-num">M${lesson.module} · L${lesson.lesson}</div><div class="lesson-name">${lesson.name}</div>`;
-    btn.onclick = () => selectLesson(lesson.id, btn);
+    btn.innerHTML = `<div class="lesson-num">M${l.module} · L${l.lesson}</div><div class="lesson-name">${l.name}</div>`;
+    btn.onclick = () => { document.querySelectorAll('.lesson-btn').forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); selectedLesson=l; checkReady(); };
     grid.appendChild(btn);
   });
 }
 
-function selectLesson(id, btn) {
-  document.querySelectorAll('.lesson-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  selectedLesson = LESSONS.find(l => l.id === id);
-  checkStartReady();
+function checkReady() {
+  const ok = document.getElementById('staff-name').value.trim() && document.getElementById('anthropic-key').value.trim() && document.getElementById('openai-key').value.trim() && selectedLesson;
+  document.getElementById('start-btn').disabled = !ok;
 }
 
-function checkStartReady() {
-  const name = document.getElementById('staff-name').value.trim();
-  const ant = document.getElementById('anthropic-key').value.trim();
-  const oai = document.getElementById('openai-key').value.trim();
-  document.getElementById('start-btn').disabled = !name || !ant || !oai || !selectedLesson;
-}
-
-['staff-name','anthropic-key','openai-key'].forEach(id => {
-  document.getElementById(id).addEventListener('input', checkStartReady);
-});
+['staff-name','anthropic-key','openai-key'].forEach(id => document.getElementById(id).addEventListener('input', checkReady));
 
 function startSession() {
   staffName = document.getElementById('staff-name').value.trim();
   anthropicKey = document.getElementById('anthropic-key').value.trim();
   openaiKey = document.getElementById('openai-key').value.trim();
-  localStorage.setItem('op_anthropic', anthropicKey);
-  localStorage.setItem('op_openai', openaiKey);
+  localStorage.setItem('op_ant', anthropicKey);
+  localStorage.setItem('op_oai', openaiKey);
   localStorage.setItem('op_name', staffName);
   document.getElementById('setup-screen').style.display = 'none';
-  const mainApp = document.getElementById('main-app');
-  mainApp.style.display = 'flex';
-  document.getElementById('lesson-indicator').textContent = `Module ${selectedLesson.module} · Lesson ${selectedLesson.lesson} — ${selectedLesson.name}`;
+  document.getElementById('main-app').style.display = 'flex';
+  document.getElementById('lesson-tag').textContent = `M${selectedLesson.module} · L${selectedLesson.lesson} — ${selectedLesson.name}`;
   buildWaveform();
+  buildPronunBar();
   beginLesson();
 }
 
 function newLesson() {
-  chatHistory = [];
-  document.getElementById('chat-scroll').innerHTML = '<div class="empty-state" id="empty-state"><div class="ei">✦</div><p>Session starting...</p></div>';
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  chatHistory = []; pronunTestWord = null;
+  document.getElementById('chat-scroll').innerHTML = '<div class="empty-state" id="empty-state"><span>🌿</span><p>Starting your session...</p></div>';
   document.getElementById('setup-screen').style.display = 'flex';
   document.getElementById('main-app').style.display = 'none';
   selectedLesson = null;
-  document.querySelectorAll('.lesson-btn').forEach(b => b.classList.remove('selected'));
-  checkStartReady();
+  document.querySelectorAll('.lesson-btn').forEach(b=>b.classList.remove('selected'));
+  checkReady();
+}
+
+function buildPronunBar() {
+  const bar = document.getElementById('pronun-bar');
+  const wordsEl = document.getElementById('pronun-words');
+  bar.style.display = 'block';
+  wordsEl.innerHTML = '';
+  selectedLesson.viPronunciation.forEach((word, i) => {
+    const span = document.createElement('span');
+    span.className = 'pronun-word';
+    span.dataset.word = word;
+    span.textContent = word;
+    span.title = selectedLesson.phonetic[i];
+    span.onclick = () => startPronunTest(word, selectedLesson.phonetic[i], span);
+    wordsEl.appendChild(span);
+  });
+}
+
+function startPronunTest(word, phonetic, el) {
+  if (isWaiting) return;
+  pronunTestWord = { word, phonetic, el };
+  document.querySelectorAll('.pronun-word').forEach(w => w.classList.remove('testing'));
+  el.classList.add('testing');
+  document.getElementById('pronun-mode-banner').style.display = 'block';
+  document.getElementById('pronun-mode-banner').textContent = `Say "${word}" clearly (${phonetic}) — then tap the mic`;
+  setStatus(`Now say: "${word}" — ${phonetic}`);
+  setMode('voice');
+}
+
+function clearPronunTest() {
+  pronunTestWord = null;
+  document.getElementById('pronun-mode-banner').style.display = 'none';
+  setStatus('Tap the microphone to speak');
+}
+
+function evaluatePronunciation(transcript) {
+  if (!pronunTestWord) return false;
+  const { word, phonetic, el } = pronunTestWord;
+  const t = transcript.toLowerCase().trim();
+  const target = word.toLowerCase();
+  const isClose = t.includes(target) || target.includes(t) || levenshtein(t, target) <= 2 || t.split(' ').some(w => levenshtein(w, target) <= 1);
+  el.classList.remove('testing','passed','failed');
+  if (isClose) {
+    el.classList.add('passed');
+    const feedback = `Well done! Your pronunciation of "${word}" (${phonetic}) was clear and correct.`;
+    addMessage('assistant', feedback);
+    chatHistory.push({role:'assistant', content: feedback});
+    speakText(feedback, null);
+  } else {
+    el.classList.add('failed');
+    const feedback = `Almost! For "${word}", try: ${phonetic}. I heard "${transcript}" — tap the word again to try once more.`;
+    addMessage('assistant', feedback);
+    chatHistory.push({role:'assistant', content: feedback});
+    speakText(feedback, null);
+  }
+  clearPronunTest();
+  return true;
+}
+
+function levenshtein(a, b) {
+  const m=a.length,n=b.length,dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
 }
 
 function buildSystemPrompt(lesson) {
-  return `You are an English language tutor for The Orchid Pavilion restaurant in Da Nang, Vietnam. You are coaching ${staffName}, a Vietnamese hospitality staff member.
+  return `You are an English language tutor for The Orchid Pavilion restaurant in Da Nang, Vietnam. You are coaching ${staffName} one-to-one.
 
-CURRENT LESSON: Module ${lesson.module}, Lesson ${lesson.lesson} — "${lesson.name}"
+CURRENT LESSON: Module ${lesson.module}, Lesson ${lesson.lesson} — ${lesson.name}
 
-LESSON CONTENT TO TEACH:
+LESSON CONTENT:
 ${lesson.focus}
 
-BRAND STANDARD OVERRIDES (these take priority over general English):
-${lesson.brandOverrides.map((r,i) => `${i+1}. ${r}`).join('\n')}
+BRAND STANDARD DIFFERENCES — always explain clearly when The Orchid Pavilion uses different phrasing from standard English. Say: "In general English you might say X, but at The Orchid Pavilion we always say Y."
+${lesson.brandOverrides.map((r,i)=>`${i+1}. ${r}`).join('\n')}
 
-COACHING STYLE — VERY IMPORTANT:
-- Be warm, encouraging, and conversational. Move at a good pace.
-- Only correct the most important error per turn.
-- Use: Validate first, then correct gently, then ask them to try once.
-- If their English is clearly understood even with minor errors, praise the communication first.
-- Do NOT make the student repeat the same phrase more than twice. Move on after two attempts.
-- Keep responses concise — 2-4 short paragraphs maximum.
-- Make it feel like a friendly practice session, not an exam.
+COACHING STYLE:
+- Warm, friendly, encouraging. Like a helpful colleague, not an examiner.
+- Keep responses short — 2 to 3 sentences maximum per turn.
+- Start by introducing the lesson topic in one sentence, then ask if the student has any questions before you begin practice. Wait for their response.
+- After their questions, guide them gently through 2 to 3 practice scenarios.
+- Only correct one error per response. Praise first.
+- Never make the student repeat the same phrase more than twice. Move on with encouragement.
+- Write in plain natural sentences only. No bullet points, no bold text, no asterisks, no markdown of any kind.
+- The pronunciation target words appear as tap buttons above the chat — do not drill them in the main conversation.
 
-PHONETIC COACHING (for Vietnamese speakers):
-- Watch for: dropping final consonants (s, d, t, b), replacing 'r' with 'l', replacing 'tr' with 'ch', flat word stress.
-- Target words for this lesson: ${lesson.viPronunciation.map((w,i) => `"${w}" = ${lesson.phonetic[i]}`).join(', ')}
-
-SESSION STRUCTURE:
-1. Warm welcome using ${staffName}'s name. Briefly explain what this lesson covers.
-2. Run through 2-3 key phrases or role-play scenarios.
-3. Keep momentum — praise and move forward quickly when they get something right.
-4. End with: "Let's finish with our Vietnamese pronunciation challenge for today!" then drill: ${lesson.viPronunciation.join(', ')}.
+PHONETIC NOTES FOR VIETNAMESE SPEAKERS:
+Watch for: dropping final consonants (s, d, t, b), replacing r with l, replacing tr with ch, flat unstressed rhythm. If you hear these, correct gently.
 
 BRAND VOICE:
-- FORBIDDEN: "What do you want?", "You want that?", "Wait a moment", "Bye bye!", "Sorry sorry!", "No problem", "Is everything okay?"
-- REQUIRED: "May I help you?", "Certainly", "Just one moment, please", "It was my pleasure", "Thank you for dining with us", "I sincerely apologise"
+Never say: "What do you want", "You want that", "Wait a moment", "Bye bye", "Sorry sorry", "No problem", "Is everything okay"
+Always use: "May I help you", "Certainly", "Just one moment please", "It was my pleasure", "Thank you for dining with us", "I sincerely apologise"
 
-Student messages may come from voice transcription — focus on meaning, not spelling errors.`;
+Student messages may come from voice transcription. Focus on meaning, not spelling.`;
 }
 
 async function callClaude(userMessage) {
   const messages = userMessage
-    ? [...chatHistory, { role:'user', content:userMessage }]
-    : [{ role:'user', content:`Hello, I am ready to begin Module ${selectedLesson.module}, Lesson ${selectedLesson.lesson}.` }];
+    ? [...chatHistory, {role:'user',content:userMessage}]
+    : [{role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`}];
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method:'POST',
-    headers:{ 'Content-Type':'application/json', 'x-api-key':anthropicKey, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
-    body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:800, system:buildSystemPrompt(selectedLesson), messages })
+    headers:{'Content-Type':'application/json','x-api-key':anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:buildSystemPrompt(selectedLesson),messages})
   });
   if (!res.ok) throw new Error(`API ${res.status}`);
   return (await res.json()).content[0].text;
 }
 
+function stripMarkdown(text) {
+  return text.replace(/\*\*/g,'').replace(/\*/g,'').replace(/_/g,'').replace(/#{1,6}\s/g,'').replace(/`/g,'').trim();
+}
+
 async function speakText(text, btnEl) {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  document.querySelectorAll('.speak-btn.playing').forEach(b => b.classList.remove('playing'));
+  document.querySelectorAll('.speak-btn.playing').forEach(b=>b.classList.remove('playing'));
   if (btnEl) btnEl.classList.add('playing');
   try {
-    const clean = text.replace(/[✦✧★]/g,'').replace(/\*\*/g,'').trim();
     const res = await fetch('https://api.openai.com/v1/audio/speech', {
       method:'POST',
-      headers:{ 'Authorization':`Bearer ${openaiKey}`, 'Content-Type':'application/json' },
-      body:JSON.stringify({ model:'tts-1', voice:'nova', input:clean, speed:0.92 })
+      headers:{'Authorization':`Bearer ${openaiKey}`,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'tts-1',voice:'nova',input:stripMarkdown(text),speed:1.0})
     });
     if (!res.ok) throw new Error('TTS failed');
     const url = URL.createObjectURL(await res.blob());
     currentAudio = new Audio(url);
-    currentAudio.onended = () => { if (btnEl) btnEl.classList.remove('playing'); currentAudio = null; };
+    currentAudio.onended = () => { if (btnEl) btnEl.classList.remove('playing'); currentAudio=null; };
     currentAudio.play();
   } catch(e) { if (btnEl) btnEl.classList.remove('playing'); }
 }
 
 async function beginLesson() {
-  setWaiting(true); showTyping();
+  setWaiting(true); showThinking();
   try {
     const reply = await callClaude('');
-    hideTyping();
+    hideThinking();
     const msgEl = addMessage('assistant', reply);
-    chatHistory.push({ role:'user', content:`Hello, I am ready to begin Module ${selectedLesson.module}, Lesson ${selectedLesson.lesson}.` });
-    chatHistory.push({ role:'assistant', content:reply });
+    chatHistory.push({role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`});
+    chatHistory.push({role:'assistant',content:reply});
     speakText(reply, msgEl.querySelector('.speak-btn'));
   } catch(e) {
-    hideTyping();
-    addMessage('assistant', `Hello ${staffName}! Welcome to your training session for ${selectedLesson.name}. Let's get started!`);
+    hideThinking();
+    addMessage('assistant', `Hello ${staffName}! Welcome to ${selectedLesson.name}. Do you have any questions about this lesson before we begin?`);
   }
   setWaiting(false);
 }
 
 async function sendMessage(userText) {
   if (!userText.trim() || isWaiting) return;
+  if (pronunTestWord) { addMessage('user', userText); evaluatePronunciation(userText); return; }
   addMessage('user', userText);
-  chatHistory.push({ role:'user', content:userText });
-  setWaiting(true); showTyping();
+  chatHistory.push({role:'user',content:userText});
+  setWaiting(true); showThinking();
   try {
     const reply = await callClaude(userText);
-    hideTyping();
+    hideThinking();
     const msgEl = addMessage('assistant', reply);
-    chatHistory.push({ role:'assistant', content:reply });
+    chatHistory.push({role:'assistant',content:reply});
     speakText(reply, msgEl.querySelector('.speak-btn'));
-  } catch(e) { hideTyping(); addMessage('assistant', 'Something went wrong. Please try again.'); }
+  } catch(e) { hideThinking(); addMessage('assistant','Something went wrong. Please try again.'); }
   setWaiting(false); resetVoice();
 }
 
@@ -556,128 +593,124 @@ function addMessage(role, content) {
   if (role === 'assistant') {
     const speakBtn = document.createElement('button');
     speakBtn.className = 'speak-btn';
-    speakBtn.title = 'Listen';
-    speakBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>`;
+    speakBtn.title = 'Replay';
+    speakBtn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.8"/></svg>`;
+    speakBtn.onclick = () => speakText(content, speakBtn);
     row.innerHTML = `<div class="role-label">Orchid Pavilion</div><div class="bubble-row"></div>`;
     const br = row.querySelector('.bubble-row');
     const bubble = document.createElement('div');
     bubble.className = 'bubble assistant';
-    bubble.innerHTML = escHtml(content);
-    speakBtn.onclick = () => speakText(content, speakBtn);
+    bubble.textContent = content;
     br.appendChild(bubble); br.appendChild(speakBtn);
   } else {
-    row.innerHTML = `<div class="role-label">You</div><div class="bubble user">${escHtml(content)}</div>`;
+    row.innerHTML = `<div class="role-label">You</div>`;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble user';
+    bubble.textContent = content;
+    row.appendChild(bubble);
   }
   scroll.appendChild(row); scroll.scrollTop = scroll.scrollHeight;
   return row;
 }
 
-function escHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
-
-function showTyping() {
+function showThinking() {
   const scroll = document.getElementById('chat-scroll');
   const empty = document.getElementById('empty-state');
   if (empty) empty.style.display = 'none';
   const el = document.createElement('div');
-  el.className = 'msg-row assistant'; el.id = 'typing-row';
-  el.innerHTML = `<div class="role-label">Orchid Pavilion</div><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  el.className = 'thinking-row'; el.id = 'thinking-row';
+  el.innerHTML = `<div class="role-label">Orchid Pavilion</div><div class="thinking-bubble"><div class="thinking-text">Thinking</div><div class="thinking-dots"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div></div>`;
   scroll.appendChild(el); scroll.scrollTop = scroll.scrollHeight;
 }
 
-function hideTyping() { const el = document.getElementById('typing-row'); if (el) el.remove(); }
+function hideThinking() { const el=document.getElementById('thinking-row'); if(el)el.remove(); }
 
 function setWaiting(val) {
   isWaiting = val;
   document.getElementById('mic-btn').disabled = val;
   document.getElementById('text-input').disabled = val;
   document.getElementById('send-btn').disabled = val || !document.getElementById('text-input').value.trim();
-  if (!val && recordState === 'idle') setStatus('Tap the microphone to speak');
+  if (!val && recordState==='idle' && !pronunTestWord) setStatus('Tap the microphone to speak');
 }
 
-function setStatus(msg, isError) {
-  const el = document.getElementById('status-text');
-  el.textContent = msg; el.className = 'status-text' + (isError ? ' error' : '');
-}
+function setStatus(msg, isErr) { const el=document.getElementById('status-text'); el.textContent=msg; el.className='status-text'+(isErr?' err':''); }
 
 function setMode(m) {
-  document.getElementById('voice-ui').style.display = m==='voice' ? 'flex' : 'none';
-  document.getElementById('type-ui').style.display = m==='type' ? 'block' : 'none';
-  document.getElementById('btn-voice').classList.toggle('active', m==='voice');
-  document.getElementById('btn-type').classList.toggle('active', m==='type');
+  document.getElementById('voice-ui').style.display = m==='voice'?'flex':'none';
+  document.getElementById('type-ui').style.display = m==='type'?'block':'none';
+  document.getElementById('btn-voice').classList.toggle('active',m==='voice');
+  document.getElementById('btn-type').classList.toggle('active',m==='type');
 }
 
 function buildWaveform() {
-  const wf = document.getElementById('waveform'); wf.innerHTML = ''; waveBarEls = [];
-  for (let i=0; i<24; i++) { const b=document.createElement('div'); b.className='wave-bar'; b.style.height='3px'; wf.appendChild(b); waveBarEls.push(b); }
+  const wf=document.getElementById('waveform'); wf.innerHTML=''; waveBarEls=[];
+  for(let i=0;i<24;i++){const b=document.createElement('div');b.className='wave-bar';b.style.height='3px';wf.appendChild(b);waveBarEls.push(b);}
 }
 
 function startWaveform(s) {
-  audioCtx = new AudioContext();
-  const src = audioCtx.createMediaStreamSource(s);
-  analyser = audioCtx.createAnalyser(); analyser.fftSize=64;
-  src.connect(analyser);
-  const data = new Uint8Array(analyser.frequencyBinCount);
-  const tick = () => { analyser.getByteFrequencyData(data); waveBarEls.forEach((b,i)=>{ const v=data[Math.floor(i*data.length/waveBarEls.length)]||0; b.style.height=Math.max(3,(v/255)*26)+'px'; b.classList.add('active'); }); animFrame=requestAnimationFrame(tick); };
+  audioCtx=new AudioContext();
+  const src=audioCtx.createMediaStreamSource(s);
+  analyser=audioCtx.createAnalyser();analyser.fftSize=64;src.connect(analyser);
+  const data=new Uint8Array(analyser.frequencyBinCount);
+  const tick=()=>{analyser.getByteFrequencyData(data);waveBarEls.forEach((b,i)=>{const v=data[Math.floor(i*data.length/waveBarEls.length)]||0;b.style.height=Math.max(3,(v/255)*24)+'px';b.classList.add('on');});animFrame=requestAnimationFrame(tick);};
   tick();
 }
 
-function stopWaveform() { if (animFrame) cancelAnimationFrame(animFrame); waveBarEls.forEach(b=>{b.style.height='3px';b.classList.remove('active');}); }
+function stopWaveform(){if(animFrame)cancelAnimationFrame(animFrame);waveBarEls.forEach(b=>{b.style.height='3px';b.classList.remove('on');});}
 
-function updateArc(pct) {
-  if (pct<=0){document.getElementById('arc-path').setAttribute('d','');return;}
-  const r=35,cx=40,cy=40,angle=pct*2*Math.PI,x=cx+r*Math.cos(angle-Math.PI/2),y=cy+r*Math.sin(angle-Math.PI/2);
+function updateArc(pct){
+  if(pct<=0){document.getElementById('arc-path').setAttribute('d','');return;}
+  const r=33,cx=38,cy=38,angle=pct*2*Math.PI,x=cx+r*Math.cos(angle-Math.PI/2),y=cy+r*Math.sin(angle-Math.PI/2);
   document.getElementById('arc-path').setAttribute('d',`M ${cx} ${cy-r} A ${r} ${r} 0 ${pct>.5?1:0} 1 ${x} ${y}`);
 }
 
-function handleMicClick() { if(isWaiting)return; if(recordState==='recording')stopRecording(); else if(recordState==='idle'||recordState==='error')startRecording(); }
+function handleMicClick(){if(isWaiting)return;if(recordState==='recording')stopRecording();else if(recordState==='idle'||recordState==='error')startRecording();}
 
-async function startRecording() {
+async function startRecording(){
   chunks=[];elapsed=0;updateArc(0);
   document.getElementById('try-again-btn').style.display='none';
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({audio:true});
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({audio:true});
     startWaveform(stream);
-    mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.ondataavailable = e=>{if(e.data.size>0)chunks.push(e.data);};
-    mediaRecorder.onstop = async()=>{await transcribeAndSend(new Blob(chunks,{type:'audio/webm'}));};
-    mediaRecorder.start(); recordState='recording';
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+    mediaRecorder.onstop=async()=>{await transcribeAndSend(new Blob(chunks,{type:'audio/webm'}));};
+    mediaRecorder.start();recordState='recording';
     document.getElementById('mic-btn').classList.add('recording');
     document.getElementById('mic-icon').innerHTML=`<rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>`;
-    document.getElementById('pulse1').classList.add('active');
-    document.getElementById('pulse2').classList.add('active');
-    timerInterval=setInterval(()=>{elapsed++;document.getElementById('countdown').textContent=`${MAX_SECONDS-elapsed}s`;updateArc(elapsed/MAX_SECONDS);if(elapsed>=MAX_SECONDS)stopRecording();},1000);
-    setStatus('');
-  } catch(e){recordState='error';setStatus('Microphone access denied.',true);document.getElementById('try-again-btn').style.display='block';}
+    document.getElementById('p1').classList.add('on');document.getElementById('p2').classList.add('on');
+    timerInterval=setInterval(()=>{elapsed++;document.getElementById('countdown').textContent=`${MAX_SECS-elapsed}s`;updateArc(elapsed/MAX_SECS);if(elapsed>=MAX_SECS)stopRecording();},1000);
+    setStatus(pronunTestWord?`Listening for "${pronunTestWord.word}"...`:'');
+  }catch(e){recordState='error';setStatus('Microphone access denied.',true);document.getElementById('try-again-btn').style.display='block';}
 }
 
-function stopRecording() {
-  if(timerInterval)clearInterval(timerInterval); stopWaveform();
+function stopRecording(){
+  if(timerInterval)clearInterval(timerInterval);stopWaveform();
   if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}
   if(audioCtx){audioCtx.close();audioCtx=null;}
   if(mediaRecorder&&mediaRecorder.state!=='inactive')mediaRecorder.stop();
   document.getElementById('mic-btn').classList.remove('recording');
-  document.getElementById('mic-icon').innerHTML=`<rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/><path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`;
-  document.getElementById('pulse1').classList.remove('active');
-  document.getElementById('pulse2').classList.remove('active');
+  document.getElementById('mic-icon').innerHTML=`<rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/><path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`;
+  document.getElementById('p1').classList.remove('on');document.getElementById('p2').classList.remove('on');
   document.getElementById('countdown').textContent='';
 }
 
-async function transcribeAndSend(blob) {
-  recordState='transcribing'; setStatus('Transcribing...'); document.getElementById('mic-btn').disabled=true;
-  try {
-    const lang=document.getElementById('lang-select').value;
-    const fd=new FormData(); fd.append('file',blob,'audio.webm'); fd.append('model','whisper-1'); if(lang)fd.append('language',lang);
+async function transcribeAndSend(blob){
+  recordState='transcribing';setStatus('Transcribing...');document.getElementById('mic-btn').disabled=true;
+  try{
+    const fd=new FormData();fd.append('file',blob,'audio.webm');fd.append('model','whisper-1');fd.append('language','en');
     const res=await fetch('https://api.openai.com/v1/audio/transcriptions',{method:'POST',headers:{Authorization:`Bearer ${openaiKey}`},body:fd});
     if(!res.ok)throw new Error(`Whisper ${res.status}`);
     const transcript=((await res.json()).text||'').trim();
     if(!transcript){recordState='error';setStatus('No speech detected.',true);document.getElementById('try-again-btn').style.display='block';document.getElementById('mic-btn').disabled=false;return;}
-    recordState='done'; setStatus(''); await sendMessage(transcript);
-  } catch(e){recordState='error';setStatus('Transcription failed. Check your OpenAI key.',true);document.getElementById('try-again-btn').style.display='block';document.getElementById('mic-btn').disabled=false;}
+    recordState='done';setStatus('');
+    await sendMessage(transcript);
+  }catch(e){recordState='error';setStatus('Transcription failed. Check your OpenAI key.',true);document.getElementById('try-again-btn').style.display='block';document.getElementById('mic-btn').disabled=false;}
 }
 
-function resetVoice() { recordState='idle';elapsed=0;updateArc(0);document.getElementById('countdown').textContent='';document.getElementById('try-again-btn').style.display='none';document.getElementById('mic-btn').disabled=false;stopWaveform();if(!isWaiting)setStatus('Tap the microphone to speak'); }
+function resetVoice(){recordState='idle';elapsed=0;updateArc(0);document.getElementById('countdown').textContent='';document.getElementById('try-again-btn').style.display='none';document.getElementById('mic-btn').disabled=false;stopWaveform();if(!isWaiting&&!pronunTestWord)setStatus('Tap the microphone to speak');}
 
-function handleTypeSubmit() { const input=document.getElementById('text-input');const text=input.value.trim();if(!text||isWaiting)return;input.value='';autoResize(input);document.getElementById('send-btn').disabled=true;sendMessage(text); }
+function handleTypeSubmit(){const input=document.getElementById('text-input');const text=input.value.trim();if(!text||isWaiting)return;input.value='';autoResize(input);document.getElementById('send-btn').disabled=true;sendMessage(text);}
 function handleKeyDown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();handleTypeSubmit();}}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';document.getElementById('send-btn').disabled=!el.value.trim()||isWaiting;}
 
@@ -685,7 +718,7 @@ buildLessonGrid();
 if(anthropicKey)document.getElementById('anthropic-key').value=anthropicKey;
 if(openaiKey)document.getElementById('openai-key').value=openaiKey;
 if(staffName)document.getElementById('staff-name').value=staffName;
-checkStartReady();
+checkReady();
 </script>
 </body>
 </html>
