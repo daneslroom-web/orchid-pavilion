@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Orchid Pavilion — Voice Concierge</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a96e;
+    --gold-light: #e2c898;
+    --gold-dim: rgba(201,169,110,0.18);
+    --gold-border: rgba(201,169,110,0.22);
+    --charcoal: #0f0e0d;
+    --charcoal-2: #1a1917;
+    --charcoal-3: #252320;
+    --charcoal-4: #2e2b27;
+    --text-muted: rgba(201,169,110,0.5);
+    --text-body: rgba(255,255,255,0.75);
+    --error: #e07070;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--charcoal);
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  #app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  /* ── Header ── */
+  header {
+    width: 100%;
+    text-align: center;
+    padding: 24px 24px 18px;
+    border-bottom: 1px solid rgba(201,169,110,0.08);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .orchid-icon { font-size: 14px; margin-bottom: 6px; opacity: 0.8; }
+
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 4vw, 22px);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  header p {
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .divider {
+    width: 28px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 12px auto 0;
+  }
+
+  /* ── API Key Banner ── */
+  #api-banner {
+    width: 100%;
+    max-width: 520px;
+    background: rgba(201,169,110,0.06);
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  #api-banner label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  #api-key-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(201,169,110,0.2);
+    color: var(--gold-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    padding: 2px 4px;
+    outline: none;
+    letter-spacing: 0.04em;
+  }
+
+  #api-key-input::placeholder { color: rgba(201,169,110,0.25); }
+  #api-key-input:focus { border-bottom-color: var(--gold); }
+
+  .save-key-btn {
+    background: none;
+    border: 1px solid rgba(201,169,110,0.3);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 1px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .save-key-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── Chat Scroll ── */
+  #chat-scroll {
+    flex: 1;
+    width: 100%;
+    max-width: 520px;
+    overflow-y: auto;
+    padding: 20px 18px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+  }
+
+  #chat-scroll::-webkit-scrollbar { width: 2px; }
+  #chat-scroll::-webkit-scrollbar-thumb { background: rgba(201,169,110,0.15); border-radius: 2px; }
+
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    opacity: 0.3;
+    padding: 40px 0;
+    pointer-events: none;
+  }
+
+  .empty-state .icon { font-size: 24px; }
+
+  .empty-state p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+  }
+
+  .msg-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    animation: fadeUp 0.22s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-row.user { align-items: flex-end; }
+  .msg-row.assistant { align-items: flex-start; }
+
+  .role-label {
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 3px;
+  }
+
+  .bubble {
+    max-width: 83%;
+    padding: 10px 14px;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+  }
+
+  .bubble.user {
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    color: var(--gold-light);
+    border-bottom-right-radius: 0;
+  }
+
+  .bubble.assistant {
+    background: var(--charcoal-3);
+    border: 1px solid rgba(201,169,110,0.1);
+    color: var(--text-body);
+    border-bottom-left-radius: 0;
+  }
+
+  /* Typing indicator */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 14px;
+    background: var(--charcoal-3);
+    border: 1px solid rgba(201,169,110,0.1);
+    border-radius: 2px;
+    border-bottom-left-radius: 0;
+    width: fit-content;
+  }
+
+  .typing-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: typingDot 1.2s ease infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.16s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.32s; }
+
+  @keyframes typingDot {
+    0%, 80%, 100% { opacity: 0.2; transform: translateY(0); }
+    40% { opacity: 1; transform: translateY(-3px); }
+  }
+
+  /* ── Input Panel ── */
+  #input-panel {
+    width: 100%;
+    max-width: 520px;
+    flex-shrink: 0;
+    background: var(--charcoal-2);
+    border-top: 1px solid rgba(201,169,110,0.1);
+    padding: 16px 18px 22px;
+  }
+
+  .controls-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .toggle-track {
+    display: flex;
+    background: var(--charcoal-3);
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .toggle-btn {
+    padding: 5px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--text-muted);
+  }
+
+  .toggle-btn.active {
+    background: var(--gold);
+    color: var(--charcoal);
+  }
+
+  .lang-select {
+    flex: 1;
+    background: var(--charcoal-3);
+    border: 1px solid rgba(201,169,110,0.15);
+    border-radius: 2px;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    padding: 5px 8px;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+  }
+
+  /* ── Voice UI ── */
+  #voice-ui { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  #type-ui { display: none; }
+
+  .mic-wrapper {
+    position: relative;
+    width: 88px; height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+
+  .arc-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .mic-btn {
+    position: relative;
+    z-index: 2;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(201,169,110,0.35);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    color: var(--gold);
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .mic-btn:hover { border-color: var(--gold); background: var(--gold-dim); }
+  .mic-btn.recording { border-color: var(--gold); background: var(--gold-dim); color: var(--gold-light); }
+  .mic-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    animation: pulseRing 1.6s ease-out infinite;
+    pointer-events: none;
+    display: none;
+  }
+
+  .pulse-ring.active { display: block; }
+  .pulse-ring:nth-child(2) { animation-delay: 0.5s; }
+
+  @keyframes pulseRing {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.55); opacity: 0; }
+  }
+
+  .countdown {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    height: 16px;
+    text-align: center;
+  }
+
+  .waveform {
+    width: 100%;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin: 8px 0 2px;
+  }
+
+  .wave-bar {
+    width: 2px;
+    border-radius: 2px;
+    background: var(--gold);
+    min-height: 3px;
+    opacity: 0.18;
+    transition: height 0.08s ease-out;
+  }
+
+  .wave-bar.active { opacity: 1; }
+
+  .status-text {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 6px;
+    min-height: 15px;
+  }
+
+  .status-text.error { color: var(--error); }
+
+  .try-again-btn {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin-top: 4px;
+    padding: 0;
+    display: none;
+  }
+
+  /* ── Type UI ── */
+  .type-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .text-input {
+    flex: 1;
+    background: var(--charcoal-3);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 2px;
+    color: var(--gold-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.6;
+    padding: 9px 12px;
+    resize: none;
+    outline: none;
+    min-height: 42px;
+    max-height: 110px;
+    transition: border-color 0.2s;
+  }
+
+  .text-input::placeholder { color: rgba(201,169,110,0.22); }
+  .text-input:focus { border-color: rgba(201,169,110,0.45); }
+  .text-input:disabled { opacity: 0.5; }
+
+  .send-btn {
+    width: 42px; height: 42px;
+    flex-shrink: 0;
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    color: var(--charcoal);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .send-btn:disabled {
+    background: transparent;
+    border-color: rgba(201,169,110,0.2);
+    color: var(--text-muted);
+    cursor: not-allowed;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="orchid-icon">✦</div>
+    <h1>The Orchid Pavilion</h1>
+    <p>Voice Concierge</p>
+    <div class="divider"></div>
+  </header>
+
+  <div id="api-banner" style="flex-direction:column; gap:8px; padding:10px 16px;">
+    <div style="display:flex; align-items:center; gap:10px; width:100%;">
+      <label style="width:90px;">Anthropic Key</label>
+      <input type="password" id="anthropic-key-input" placeholder="sk-ant-..." autocomplete="off" style="flex:1; background:transparent; border:none; border-bottom:1px solid rgba(201,169,110,0.2); color:#e2c898; font-family:Inter,sans-serif; font-size:11px; padding:2px 4px; outline:none;"/>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; width:100%;">
+      <label style="width:90px;">OpenAI Key</label>
+      <input type="password" id="api-key-input" placeholder="sk-proj-..." autocomplete="off" style="flex:1; background:transparent; border:none; border-bottom:1px solid rgba(201,169,110,0.2); color:#e2c898; font-family:Inter,sans-serif; font-size:11px; padding:2px 4px; outline:none;"/>
+      <button class="save-key-btn" onclick="saveKey()">Save</button>
+    </div>
+  </div>
+
+  <div id="chat-scroll">
+    <div class="empty-state" id="empty-state">
+      <div class="icon">✦</div>
+      <p>Begin your conversation</p>
+    </div>
+  </div>
+
+  <div id="input-panel">
+    <div class="controls-row">
+      <div class="toggle-track">
+        <button class="toggle-btn active" id="btn-voice" onclick="setMode('voice')">Voice</button>
+        <button class="toggle-btn" id="btn-type" onclick="setMode('type')">Type</button>
+      </div>
+      <select class="lang-select" id="lang-select">
+        <option value="vi">Vietnamese</option>
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="">Auto-detect</option>
+      </select>
+    </div>
+
+    <!-- Voice UI -->
+    <div id="voice-ui">
+      <div class="mic-wrapper">
+        <div class="pulse-ring" id="pulse1"></div>
+        <div class="pulse-ring" id="pulse2"></div>
+        <svg class="arc-svg" viewBox="0 0 88 88" id="arc-svg">
+          <circle cx="44" cy="44" r="39" fill="none" stroke="rgba(201,169,110,0.1)" stroke-width="1.5"/>
+          <path id="arc-path" fill="none" stroke="#c9a96e" stroke-width="1.5" stroke-linecap="round" d=""/>
+        </svg>
+        <button class="mic-btn" id="mic-btn" onclick="handleMicClick()">
+          <svg id="mic-icon" width="17" height="17" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/>
+            <path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="countdown" id="countdown"></div>
+      <div class="waveform" id="waveform"></div>
+      <div class="status-text" id="status-text">Tap the microphone to speak</div>
+      <button class="try-again-btn" id="try-again-btn" onclick="resetVoice()">Try again</button>
+    </div>
+
+    <!-- Type UI -->
+    <div id="type-ui">
+      <div class="type-row">
+        <textarea
+          class="text-input"
+          id="text-input"
+          placeholder="Type your message..."
+          rows="1"
+          onkeydown="handleKeyDown(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" id="send-btn" onclick="handleTypeSubmit()" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path d="M22 2L11 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Config ──────────────────────────────────────────────────────────────────
+
+const SYSTEM_PROMPT = `# MISSION
+You are the "Orchid Pavilion AI Tutor," a specialized English coach for hospitality staff at The Orchid Pavilion in Da Nang, Vietnam. Your goal is to help staff move from Pre-Intermediate to Upper-Intermediate fluency, specifically focused on high-end restaurant service.
+
+# AUTHENTICATION & INITIALIZATION
+- First Message Requirement: You must ALWAYS start the first session by saying: "Xin chào! Welcome to your Orchid Pavilion AI Training. Please enter your Company Access Code and your current Level (1-5) to begin."
+- Lock Mechanism: Do not answer any English questions or provide coaching until the student types the access code: ORCHID2026.
+
+# KNOWLEDGE HIERARCHY
+1. PRIORITY 1: Brand-specific menu, voice, and service standards for The Orchid Pavilion.
+2. PRIORITY 2: General English and phonetic coaching.
+3. CONFLICT RULE: Always enforce Brand Standards over general English rules.
+
+# BRAND VOICE & TONE
+- Tone: Luxury Casual — sophisticated, professional, and warm.
+- Forbidden Words: Never use "What do you want?", "You want that?", "Wait a moment," or "Bye bye!"
+- Brand Words: Always use "May I help you?", "Certainly," "Just one moment, please," and "Thank you for dining with us."
+
+# ADAPTIVE LEARNING LEVELS
+- Level 1 (Foundation): Standard Greeting Script and basic water service.
+- Level 2 (Service Ready): Taking full orders. Main course pronunciation and Brand Words.
+- Level 3 (Guest Confident): Describe dishes with sensory words. Explaining allergies.
+- Level 4 (Service Pro): Upselling drinks, pairings, and desserts.
+- Level 5 (Recovery Pro): High-pressure guest complaints. 5-Step Recovery Protocol.
+
+# PHONETIC CORRECTION PROTOCOL
+1. Validate: "I understand you..."
+2. Correct: "...but at The Orchid Pavilion, we say [Brand Word]."
+3. Coach: Address common Vietnamese-English errors (final 's', 'tr' in Truffle, 'r' in Crispy).
+4. Reiterate: Ask the student to say the full corrected sentence again.
+
+# CONSTRAINTS
+- If confused, provide brief Vietnamese translation in brackets.
+- Always end every response with a follow-up question.
+- If student types !report, generate a Weekly Performance Summary.`;
+
+const MAX_SECONDS = 45;
+const NUM_BARS = 26;
+
+// ── State ───────────────────────────────────────────────────────────────────
+
+let openaiKey = localStorage.getItem('orchid_openai_key') || '';
+let anthropicKey = localStorage.getItem('orchid_anthropic_key') || '';
+let chatHistory = [];
+let recordState = 'idle';
+let elapsed = 0;
+let mediaRecorder = null;
+let chunks = [];
+let timerInterval = null;
+let analyser = null;
+let animFrame = null;
+let stream = null;
+let audioCtx = null;
+let isWaiting = false;
+let waveBarEls = [];
+
+// ── Init ────────────────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (openaiKey) document.getElementById('api-key-input').value = openaiKey;
+  if (anthropicKey) document.getElementById('anthropic-key-input').value = anthropicKey;
+  buildWaveform();
+  if (openaiKey && anthropicKey) startConversation();
+});
+
+function saveKey() {
+  const oaiVal = document.getElementById('api-key-input').value.trim();
+  const antVal = document.getElementById('anthropic-key-input').value.trim();
+  if (!oaiVal || !antVal) { alert('Please enter both your Anthropic and OpenAI keys.'); return; }
+  openaiKey = oaiVal;
+  anthropicKey = antVal;
+  localStorage.setItem('orchid_openai_key', oaiVal);
+  localStorage.setItem('orchid_anthropic_key', antVal);
+  if (chatHistory.length === 0) startConversation();
+}
+
+async function startConversation() {
+  if (!openaiKey) return;
+  setWaiting(true);
+  showTyping();
+  try {
+    const reply = await callClaude('');
+    hideTyping();
+    addMessage('assistant', reply);
+  } catch(e) {
+    hideTyping();
+    addMessage('assistant', 'Xin chào! Welcome to your Orchid Pavilion AI Training. Please enter your Company Access Code and your current Level (1-5) to begin.');
+  }
+  setWaiting(false);
+}
+
+// ── UI Helpers ───────────────────────────────────────────────────────────────
+
+function setMode(m) {
+  document.getElementById('voice-ui').style.display = m === 'voice' ? 'flex' : 'none';
+  document.getElementById('type-ui').style.display = m === 'type' ? 'block' : 'none';
+  document.getElementById('btn-voice').classList.toggle('active', m === 'voice');
+  document.getElementById('btn-type').classList.toggle('active', m === 'type');
+}
+
+function addMessage(role, content) {
+  const emptyState = document.getElementById('empty-state');
+  if (emptyState) emptyState.remove();
+
+  chatHistory.push({ role, content });
+
+  const scroll = document.getElementById('chat-scroll');
+  const row = document.createElement('div');
+  row.className = `msg-row ${role}`;
+  row.innerHTML = `
+    <div class="role-label">${role === 'user' ? 'You' : 'Orchid Pavilion'}</div>
+    <div class="bubble ${role}">${escapeHtml(content)}</div>
+  `;
+  scroll.appendChild(row);
+  scroll.scrollTop = scroll.scrollHeight;
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+let typingEl = null;
+function showTyping() {
+  const scroll = document.getElementById('chat-scroll');
+  const emptyState = document.getElementById('empty-state');
+  if (emptyState) emptyState.style.display = 'none';
+  typingEl = document.createElement('div');
+  typingEl.className = 'msg-row assistant';
+  typingEl.id = 'typing-indicator';
+  typingEl.innerHTML = `
+    <div class="role-label">Orchid Pavilion</div>
+    <div class="typing-indicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  scroll.appendChild(typingEl);
+  scroll.scrollTop = scroll.scrollHeight;
+}
+
+function hideTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+  const emptyState = document.getElementById('empty-state');
+  if (emptyState && chatHistory.length === 0) emptyState.style.display = 'flex';
+}
+
+function setWaiting(val) {
+  isWaiting = val;
+  document.getElementById('mic-btn').disabled = val;
+  document.getElementById('text-input').disabled = val;
+  document.getElementById('send-btn').disabled = val || !document.getElementById('text-input').value.trim();
+  if (val) {
+    setStatus('Please wait...');
+  } else {
+    setStatus(recordState === 'idle' ? 'Tap the microphone to speak' : '');
+  }
+}
+
+function setStatus(msg, isError) {
+  const el = document.getElementById('status-text');
+  el.textContent = msg;
+  el.className = 'status-text' + (isError ? ' error' : '');
+}
+
+// ── Anthropic API ────────────────────────────────────────────────────────────
+
+async function callClaude(userMessage) {
+  const messages = userMessage
+    ? [...chatHistory, { role: 'user', content: userMessage }]
+    : [{ role: 'user', content: 'Hello, please begin the session.' }];
+
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': anthropicKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1024,
+      system: SYSTEM_PROMPT,
+      messages,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`API error ${res.status}: ${err}`);
+  }
+
+  const data = await res.json();
+  return data.content[0].text;
+}
+
+async function sendMessage(userText) {
+  if (!openaiKey) {
+    alert('Please enter both API keys and click Save.');
+    return;
+  }
+  if (!userText.trim()) return;
+
+  addMessage('user', userText);
+  setWaiting(true);
+  showTyping();
+
+  try {
+    const reply = await callClaude(userText);
+    hideTyping();
+    addMessage('assistant', reply);
+  } catch(e) {
+    hideTyping();
+    addMessage('assistant', 'Sorry, something went wrong. Please check your API key and try again.');
+    console.error(e);
+  }
+
+  setWaiting(false);
+  resetVoice();
+}
+
+// ── Type Mode ────────────────────────────────────────────────────────────────
+
+function handleTypeSubmit() {
+  const input = document.getElementById('text-input');
+  const text = input.value.trim();
+  if (!text || isWaiting) return;
+  input.value = '';
+  autoResize(input);
+  document.getElementById('send-btn').disabled = true;
+  sendMessage(text);
+}
+
+function handleKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    handleTypeSubmit();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+  document.getElementById('send-btn').disabled = !el.value.trim() || isWaiting;
+}
+
+// ── Waveform ─────────────────────────────────────────────────────────────────
+
+function buildWaveform() {
+  const wf = document.getElementById('waveform');
+  wf.innerHTML = '';
+  waveBarEls = [];
+  for (let i = 0; i < NUM_BARS; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'wave-bar';
+    bar.style.height = '3px';
+    wf.appendChild(bar);
+    waveBarEls.push(bar);
+  }
+}
+
+function startWaveform(s) {
+  audioCtx = new AudioContext();
+  const source = audioCtx.createMediaStreamSource(s);
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 128;
+  source.connect(analyser);
+  const data = new Uint8Array(analyser.frequencyBinCount);
+  const tick = () => {
+    analyser.getByteFrequencyData(data);
+    const step = Math.floor(data.length / NUM_BARS);
+    waveBarEls.forEach((bar, i) => {
+      const val = data[i * step] || 0;
+      const h = Math.max(3, (val / 255) * 30);
+      bar.style.height = h + 'px';
+      bar.classList.add('active');
+    });
+    animFrame = requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+function stopWaveform() {
+  if (animFrame) cancelAnimationFrame(animFrame);
+  animFrame = null;
+  waveBarEls.forEach(bar => {
+    bar.style.height = '3px';
+    bar.classList.remove('active');
+  });
+}
+
+// ── Arc ──────────────────────────────────────────────────────────────────────
+
+function updateArc(pct) {
+  if (pct <= 0) { document.getElementById('arc-path').setAttribute('d', ''); return; }
+  const r = 39, cx = 44, cy = 44;
+  const angle = pct * 2 * Math.PI;
+  const x = cx + r * Math.cos(angle - Math.PI / 2);
+  const y = cy + r * Math.sin(angle - Math.PI / 2);
+  const large = pct > 0.5 ? 1 : 0;
+  document.getElementById('arc-path').setAttribute('d',
+    `M ${cx} ${cy - r} A ${r} ${r} 0 ${large} 1 ${x} ${y}`
+  );
+}
+
+// ── Recording ────────────────────────────────────────────────────────────────
+
+function handleMicClick() {
+  if (isWaiting) return;
+  if (recordState === 'recording') {
+    stopRecording();
+  } else if (recordState === 'idle' || recordState === 'error') {
+    startRecording();
+  }
+}
+
+async function startRecording() {
+  chunks = [];
+  elapsed = 0;
+  updateArc(0);
+  document.getElementById('try-again-btn').style.display = 'none';
+
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    startWaveform(stream);
+
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      await transcribeAndSend(blob);
+    };
+
+    mediaRecorder.start();
+    recordState = 'recording';
+
+    document.getElementById('mic-btn').classList.add('recording');
+    document.getElementById('mic-icon').innerHTML = `
+      <rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+      <rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>
+    `;
+    document.getElementById('pulse1').classList.add('active');
+    document.getElementById('pulse2').classList.add('active');
+
+    timerInterval = setInterval(() => {
+      elapsed++;
+      const remaining = MAX_SECONDS - elapsed;
+      document.getElementById('countdown').textContent = `${remaining}s`;
+      updateArc(elapsed / MAX_SECONDS);
+      if (elapsed >= MAX_SECONDS) stopRecording();
+    }, 1000);
+
+    setStatus('');
+
+  } catch(e) {
+    recordState = 'error';
+    setStatus('Microphone access denied.', true);
+    document.getElementById('try-again-btn').style.display = 'block';
+  }
+}
+
+function stopRecording() {
+  if (timerInterval) clearInterval(timerInterval);
+  stopWaveform();
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+  if (audioCtx) { audioCtx.close(); audioCtx = null; }
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+
+  document.getElementById('mic-btn').classList.remove('recording');
+  document.getElementById('mic-icon').innerHTML = `
+    <rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/>
+    <path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  `;
+  document.getElementById('pulse1').classList.remove('active');
+  document.getElementById('pulse2').classList.remove('active');
+  document.getElementById('countdown').textContent = '';
+}
+
+async function transcribeAndSend(blob) {
+  recordState = 'transcribing';
+  setStatus('Transcribing...');
+  document.getElementById('mic-btn').disabled = true;
+
+  try {
+    const lang = document.getElementById('lang-select').value;
+    const formData = new FormData();
+    formData.append('file', blob, 'audio.webm');
+    formData.append('model', 'whisper-1');
+    if (lang) formData.append('language', lang);
+
+    const res = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${openaiKey}` },
+      body: formData,
+    });
+
+    if (!res.ok) throw new Error(`Whisper error ${res.status}`);
+    const json = await res.json();
+    const transcript = (json.text || '').trim();
+
+    if (!transcript) {
+      setStatus('No speech detected. Try again.', true);
+      document.getElementById('try-again-btn').style.display = 'block';
+      document.getElementById('mic-btn').disabled = false;
+      recordState = 'error';
+      return;
+    }
+
+    recordState = 'done';
+    setStatus('');
+    await sendMessage(transcript);
+
+  } catch(e) {
+    recordState = 'error';
+    setStatus('Transcription failed. Check your OpenAI key.', true);
+    document.getElementById('try-again-btn').style.display = 'block';
+    document.getElementById('mic-btn').disabled = false;
+    console.error(e);
+  }
+}
+
+function resetVoice() {
+  recordState = 'idle';
+  elapsed = 0;
+  updateArc(0);
+  document.getElementById('countdown').textContent = '';
+  document.getElementById('try-again-btn').style.display = 'none';
+  document.getElementById('mic-btn').disabled = false;
+  if (!isWaiting) setStatus('Tap the microphone to speak');
+  stopWaveform();
+}
+</script>
+</body>
+</html>
