@@ -39,106 +39,51 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
 .setup-logo { text-align: center; margin-bottom: 28px; }
 .setup-logo .leaf { font-size: 28px; margin-bottom: 8px; display: block; }
-.setup-logo h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(22px, 5vw, 30px); font-weight: 400;
-  color: var(--accent); letter-spacing: 0.01em;
-}
+.setup-logo h1 { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 5vw, 30px); font-weight: 400; color: var(--accent); letter-spacing: 0.01em; }
 .setup-logo p { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
 
-.setup-card {
-  width: 100%; max-width: 440px;
-  background: var(--bg-2); border: 1px solid var(--border);
-  border-radius: 12px; padding: 28px 24px; box-shadow: var(--shadow-lg);
-}
-
-.setup-card h2 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 17px; font-weight: 400; color: var(--text);
-  margin-bottom: 22px; text-align: center;
-}
+.setup-card { width: 100%; max-width: 440px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; box-shadow: var(--shadow-lg); }
+.setup-card h2 { font-family: 'DM Serif Display', serif; font-size: 17px; font-weight: 400; color: var(--text); margin-bottom: 22px; text-align: center; }
 
 .field { margin-bottom: 14px; }
 .field label { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
-.field input {
-  width: 100%; background: var(--bg);
-  border: 1px solid var(--border-2); border-radius: 8px;
-  color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 13px; padding: 10px 12px; outline: none; transition: border-color 0.2s;
-}
+.field input { width: 100%; background: var(--bg); border: 1px solid var(--border-2); border-radius: 8px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; padding: 10px 12px; outline: none; transition: border-color 0.2s; }
 .field input:focus { border-color: var(--accent); }
 .field input::placeholder { color: var(--text-muted); }
 
 .lesson-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 6px; }
-
-.lesson-btn {
-  background: var(--bg); border: 1px solid var(--border-2);
-  border-radius: 8px; padding: 10px 10px; cursor: pointer;
-  text-align: left; transition: all 0.18s; color: var(--text-2);
-  font-family: 'DM Sans', sans-serif;
-}
+.lesson-btn { background: var(--bg); border: 1px solid var(--border-2); border-radius: 8px; padding: 10px; cursor: pointer; text-align: left; transition: all 0.18s; color: var(--text-2); font-family: 'DM Sans', sans-serif; }
 .lesson-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
 .lesson-btn.selected { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
 .lesson-btn .lesson-num { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2px; opacity: 0.65; }
 .lesson-btn .lesson-name { font-size: 11px; font-weight: 400; line-height: 1.35; }
 
-.start-btn {
-  width: 100%; margin-top: 18px;
-  background: var(--accent); border: none; border-radius: 8px;
-  color: #fff; font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
-  padding: 13px; cursor: pointer; transition: background 0.2s;
-}
+.start-btn { width: 100%; margin-top: 18px; background: var(--accent); border: none; border-radius: 8px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 13px; cursor: pointer; transition: background 0.2s; }
 .start-btn:hover { background: var(--accent-2); }
 .start-btn:disabled { background: var(--bg-4); color: var(--text-muted); cursor: not-allowed; }
 
 #main-app { width: 100%; height: 100vh; display: none; flex-direction: column; align-items: center; background: var(--bg); }
 
-header {
-  width: 100%; background: var(--bg-2);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 20px 12px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: space-between;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
+header { width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 14px 20px 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
 .header-left { display: flex; align-items: center; gap: 10px; }
 .header-leaf { font-size: 18px; }
 .header-titles h1 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; color: var(--accent); line-height: 1.2; }
 .header-titles .lesson-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; }
-
-.new-lesson-btn {
-  background: none; border: 1px solid var(--border-2);
-  border-radius: 6px; color: var(--text-muted);
-  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
-  padding: 6px 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
-}
+.new-lesson-btn { background: none; border: 1px solid var(--border-2); border-radius: 6px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; padding: 6px 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .new-lesson-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-#pronun-bar {
-  width: 100%; max-width: 600px; flex-shrink: 0;
-  background: var(--accent-light); border-bottom: 1px solid rgba(45,106,79,0.15);
-  padding: 10px 16px; display: none;
-}
+#pronun-bar { width: 100%; max-width: 600px; flex-shrink: 0; background: var(--accent-light); border-bottom: 1px solid rgba(45,106,79,0.15); padding: 10px 16px; display: none; }
 .pronun-bar-inner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .pronun-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; }
 .pronun-words { display: flex; gap: 6px; flex-wrap: wrap; }
-.pronun-word {
-  background: var(--bg-2); border: 1.5px solid var(--border-2);
-  border-radius: 20px; padding: 4px 12px;
-  font-size: 12px; font-weight: 500; color: var(--text);
-  cursor: pointer; transition: all 0.18s;
-}
+.pronun-word { background: var(--bg-2); border: 1.5px solid var(--border-2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.18s; }
 .pronun-word:hover { border-color: var(--accent); color: var(--accent); }
 .pronun-word.testing { border-color: var(--warning); background: #fef9f0; color: var(--warning); }
 .pronun-word.passed { border-color: var(--success); background: #f0faf4; color: var(--success); }
 .pronun-word.failed { border-color: var(--error); background: #fdf0f0; color: var(--error); }
 .pronun-hint { font-size: 10px; color: var(--text-muted); font-style: italic; }
 
-#chat-scroll {
-  flex: 1; width: 100%; max-width: 600px;
-  overflow-y: auto; padding: 20px 16px 12px;
-  display: flex; flex-direction: column; gap: 14px;
-}
+#chat-scroll { flex: 1; width: 100%; max-width: 600px; overflow-y: auto; padding: 20px 16px 12px; display: flex; flex-direction: column; gap: 14px; }
 #chat-scroll::-webkit-scrollbar { width: 3px; }
 #chat-scroll::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 3px; }
 
@@ -152,42 +97,24 @@ header {
 @keyframes fadeUp { from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);} }
 
 .role-label { font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); padding: 0 4px; }
-
 .bubble { max-width: 84%; padding: 11px 14px; border-radius: 12px; font-size: 13.5px; font-weight: 400; line-height: 1.65; color: var(--text); }
 .bubble.user { background: var(--accent); color: #fff; border-bottom-right-radius: 3px; }
 .bubble.assistant { background: var(--bg-2); border: 1px solid var(--border); border-bottom-left-radius: 3px; box-shadow: var(--shadow); }
 
 .bubble-row { display: flex; align-items: flex-end; gap: 6px; }
-.speak-btn {
-  flex-shrink: 0; width: 26px; height: 26px;
-  background: var(--bg-2); border: 1px solid var(--border-2);
-  border-radius: 50%; cursor: pointer; color: var(--text-muted);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s; margin-bottom: 1px; box-shadow: var(--shadow);
-}
+.speak-btn { flex-shrink: 0; width: 26px; height: 26px; background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 50%; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-bottom: 1px; box-shadow: var(--shadow); }
 .speak-btn:hover { border-color: var(--accent); color: var(--accent); }
 .speak-btn.playing { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
 .thinking-row { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
-.thinking-bubble {
-  background: var(--bg-2); border: 1px solid var(--border);
-  border-radius: 12px; border-bottom-left-radius: 3px;
-  padding: 12px 16px; box-shadow: var(--shadow);
-  display: flex; align-items: center; gap: 8px;
-}
+.thinking-bubble { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; border-bottom-left-radius: 3px; padding: 12px 16px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 8px; }
 .thinking-text { font-size: 12px; color: var(--text-muted); font-style: italic; }
 .thinking-dots { display: flex; gap: 3px; }
 .t-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.3; animation: tDot 1.2s ease infinite; }
-.t-dot:nth-child(2){animation-delay:.2s;}
-.t-dot:nth-child(3){animation-delay:.4s;}
+.t-dot:nth-child(2){animation-delay:.2s;} .t-dot:nth-child(3){animation-delay:.4s;}
 @keyframes tDot{0%,80%,100%{opacity:0.2;transform:scale(1);}40%{opacity:1;transform:scale(1.2);}}
 
-#input-panel {
-  width: 100%; max-width: 600px; flex-shrink: 0;
-  background: var(--bg-2); border-top: 1px solid var(--border);
-  padding: 12px 16px 20px; box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
-}
-
+#input-panel { width: 100%; max-width: 600px; flex-shrink: 0; background: var(--bg-2); border-top: 1px solid var(--border); padding: 12px 16px 20px; box-shadow: 0 -2px 8px rgba(0,0,0,0.04); }
 .mode-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .toggle-track { display: flex; background: var(--bg-3); border: 1px solid var(--border-2); border-radius: 8px; overflow: hidden; flex-shrink: 0; }
 .toggle-btn { padding: 6px 16px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; border: none; cursor: pointer; transition: all 0.18s; background: transparent; color: var(--text-muted); }
@@ -198,13 +125,8 @@ header {
 
 .mic-outer { position: relative; width: 76px; height: 76px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
 .arc-svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-.mic-btn {
-  position: relative; z-index: 2; width: 54px; height: 54px; border-radius: 50%;
-  border: 2px solid var(--border-2); background: var(--bg-2);
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  outline: none; color: var(--accent); transition: all 0.25s; box-shadow: var(--shadow);
-}
-.mic-btn:hover { border-color: var(--accent); background: var(--accent-dim); box-shadow: var(--shadow-lg); }
+.mic-btn { position: relative; z-index: 2; width: 54px; height: 54px; border-radius: 50%; border: 2px solid var(--border-2); background: var(--bg-2); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none; color: var(--accent); transition: all 0.25s; box-shadow: var(--shadow); }
+.mic-btn:hover { border-color: var(--accent); background: var(--accent-dim); }
 .mic-btn.recording { border-color: var(--error); background: #fdf0f0; color: var(--error); box-shadow: 0 0 0 6px rgba(192,57,43,0.08); }
 .mic-btn:disabled { opacity: 0.38; cursor: not-allowed; box-shadow: none; }
 
@@ -217,35 +139,20 @@ header {
 .waveform { width: 100%; height: 26px; display: flex; align-items: center; justify-content: center; gap: 2px; margin: 5px 0 2px; }
 .wave-bar { width: 2.5px; border-radius: 3px; background: var(--accent); min-height: 3px; opacity: 0.2; transition: height 0.08s ease-out; }
 .wave-bar.on { opacity: 1; }
-
 .status-text { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 3px; min-height: 15px; }
 .status-text.err { color: var(--error); }
 .try-again-btn { background: none; border: none; color: var(--accent); font-family: 'DM Sans', sans-serif; font-size: 11px; cursor: pointer; text-decoration: underline; margin-top: 3px; padding: 0; display: none; font-weight: 500; }
 
 .type-row { display: flex; gap: 8px; align-items: flex-end; }
-.text-input {
-  flex: 1; background: var(--bg); border: 1px solid var(--border-2);
-  border-radius: 10px; color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 13px; line-height: 1.55; padding: 10px 13px; resize: none;
-  outline: none; min-height: 42px; max-height: 100px; transition: border-color 0.2s;
-}
+.text-input { flex: 1; background: var(--bg); border: 1px solid var(--border-2); border-radius: 10px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; line-height: 1.55; padding: 10px 13px; resize: none; outline: none; min-height: 42px; max-height: 100px; transition: border-color 0.2s; }
 .text-input:focus { border-color: var(--accent); }
 .text-input::placeholder { color: var(--text-muted); }
 .text-input:disabled { opacity: 0.4; }
-
-.send-btn {
-  width: 42px; height: 42px; flex-shrink: 0; background: var(--accent);
-  border: none; border-radius: 10px; color: #fff;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-}
+.send-btn { width: 42px; height: 42px; flex-shrink: 0; background: var(--accent); border: none; border-radius: 10px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .send-btn:hover { background: var(--accent-2); }
 .send-btn:disabled { background: var(--bg-4); color: var(--text-muted); cursor: not-allowed; }
 
-#pronun-mode-banner {
-  display: none; background: #fff8f0; border: 1.5px solid var(--warning);
-  border-radius: 8px; padding: 10px 14px; margin-bottom: 10px;
-  font-size: 12px; color: var(--warning); font-weight: 500; text-align: center;
-}
+#pronun-mode-banner { display: none; background: #fff8f0; border: 1.5px solid var(--warning); border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; font-size: 12px; color: var(--warning); font-weight: 500; text-align: center; }
 </style>
 </head>
 <body>
@@ -298,7 +205,6 @@ header {
         <button class="toggle-btn" id="btn-type" onclick="setMode('type')">Type</button>
       </div>
     </div>
-
     <div id="voice-ui">
       <div class="mic-outer">
         <div class="pulse-ring" id="p1"></div>
@@ -321,7 +227,6 @@ header {
       <div class="status-text" id="status-text">Tap the microphone to speak</div>
       <button class="try-again-btn" id="try-again-btn" onclick="resetVoice()">Try again</button>
     </div>
-
     <div id="type-ui">
       <div class="type-row">
         <textarea class="text-input" id="text-input" placeholder="Type your message..." rows="1"
@@ -353,28 +258,17 @@ const LESSONS = [
   { id:'M3L4', module:3, lesson:4, name:'Ensuring Guest Satisfaction', focus:'Checking in after serving food and after resolving problems. Following up at the right moment.', brandOverrides:['Check-in: "How is everything tasting for you this evening?" — NEVER "Is everything okay?"','After complaint resolution: "I wanted to personally check that everything is to your satisfaction. It truly means a great deal to us."','Return within 5 minutes of a replacement dish being served'], viPronunciation:['satisfaction','personally','wonderful'], phonetic:['sat-is-FAK-shun','PUR-sun-a-lee','WUN-der-ful'] },
   { id:'M4L1', module:4, lesson:1, name:'Presenting the Bill', focus:'Presenting the bill politely, split payments, contactless, receipts. Dessert upsell before the bill.', brandOverrides:['Dessert upsell: "Before I bring your bill, may I tempt you with our Creme Brulee? The caramel sugar is torched fresh at your table."','Presenting the bill: "Whenever you are ready, I have your bill here for you." — NEVER just say "Here is your bill"','NEVER ask "Do you want dessert?" — always offer something specific with a description'], viPronunciation:['receipt','contactless','brulee'], phonetic:['re-SEET','KON-takt-les','broo-LAY'] },
   { id:'M4L2', module:4, lesson:2, name:'Handling Payment Issues', focus:'Card declined, incorrect bill, cash payments. Professional language for handling payment problems discreetly.', brandOverrides:['Card declined: "I am sorry, it appears the card did not go through. Would you like to try another card, or would cash be more convenient?"','Bill query: "Of course. Let me double-check the total for you right away."','After resolving: "Thank you so much for your patience. Everything is now in order."'], viPronunciation:['payment','declined','apologise'], phonetic:['PAY-ment','de-KLIND','a-POL-o-jize'] },
-  { id:'M4L3', module:4, lesson:3, name:'Receiving Feedback', focus:'Responding to positive and critical feedback professionally. Thanking guests and using feedback constructively.', brandOverrides:['Positive feedback: "That is so wonderful to hear. I will make sure to pass your kind words to the entire team."','Critical feedback: "Thank you sincerely for letting us know. We always want to do better, and your honesty truly helps us improve."','NEVER be defensive about critical feedback — treat it as a gift'], viPronunciation:['feedback','appreciate','improve'], phonetic:['FEED-bak','a-PREE-shee-ate','im-PROOV'] },
+  { id:'M4L3', module:4, lesson:3, name:'Receiving Feedback', focus:'Responding to positive and critical feedback professionally.', brandOverrides:['Positive feedback: "That is so wonderful to hear. I will make sure to pass your kind words to the entire team."','Critical feedback: "Thank you sincerely for letting us know. We always want to do better, and your honesty truly helps us improve."','NEVER be defensive about critical feedback — treat it as a gift'], viPronunciation:['feedback','appreciate','improve'], phonetic:['FEED-bak','a-PREE-shee-ate','im-PROOV'] },
   { id:'M4L4', module:4, lesson:4, name:'Professional Farewells', focus:'Warm professional goodbyes that leave a lasting positive impression. Encouraging return visits.', brandOverrides:['Standard farewell: "Thank you for dining with us. We hope to welcome you again very soon." — NEVER say "Bye bye!"','Response to thanks: "It was my pleasure." — NEVER say "No problem"','For special occasions: "It was truly an honour to be part of your celebration this evening."'], viPronunciation:['pleasure','honour','farewell'], phonetic:['PLEZH-er','ON-er','FAIR-wel'] }
 ];
 
 let anthropicKey = localStorage.getItem('op_ant') || '';
 let openaiKey = localStorage.getItem('op_oai') || '';
 let staffName = localStorage.getItem('op_name') || '';
-let selectedLesson = null;
-let chatHistory = [];
-let recordState = 'idle';
-let elapsed = 0;
-let mediaRecorder = null;
-let chunks = [];
-let timerInterval = null;
-let animFrame = null;
-let stream = null;
-let audioCtx = null;
-let analyser = null;
-let isWaiting = false;
-let waveBarEls = [];
-let currentAudio = null;
-let pronunTestWord = null;
+let selectedLesson = null, chatHistory = [], recordState = 'idle', elapsed = 0;
+let mediaRecorder = null, chunks = [], timerInterval = null, animFrame = null;
+let stream = null, audioCtx = null, analyser = null, isWaiting = false;
+let waveBarEls = [], currentAudio = null, pronunTestWord = null;
 const MAX_SECS = 45;
 
 function buildLessonGrid() {
@@ -406,9 +300,7 @@ function startSession() {
   document.getElementById('setup-screen').style.display = 'none';
   document.getElementById('main-app').style.display = 'flex';
   document.getElementById('lesson-tag').textContent = `M${selectedLesson.module} · L${selectedLesson.lesson} — ${selectedLesson.name}`;
-  buildWaveform();
-  buildPronunBar();
-  beginLesson();
+  buildWaveform(); buildPronunBar(); beginLesson();
 }
 
 function newLesson() {
@@ -425,8 +317,7 @@ function newLesson() {
 function buildPronunBar() {
   const bar = document.getElementById('pronun-bar');
   const wordsEl = document.getElementById('pronun-words');
-  bar.style.display = 'block';
-  wordsEl.innerHTML = '';
+  bar.style.display = 'block'; wordsEl.innerHTML = '';
   selectedLesson.viPronunciation.forEach((word, i) => {
     const span = document.createElement('span');
     span.className = 'pronun-word';
@@ -444,12 +335,10 @@ async function startPronunTest(word, phonetic, el) {
   el.classList.add('testing');
   setMode('voice');
   document.getElementById('mic-btn').disabled = true;
-
   const banner = document.getElementById('pronun-mode-banner');
   banner.style.display = 'block';
   banner.textContent = '🔊 Listen carefully to the model pronunciation...';
   setStatus('Playing model pronunciation...');
-
   try {
     const res = await fetch('https://api.openai.com/v1/audio/speech', {
       method: 'POST',
@@ -462,7 +351,6 @@ async function startPronunTest(word, phonetic, el) {
       await new Promise(resolve => { audio.onended = resolve; audio.onerror = resolve; audio.play(); });
     }
   } catch(e) { console.error('Pronun TTS:', e); }
-
   banner.textContent = `🎤 Your turn — say "${word}" then tap the mic`;
   setStatus(`Say it now: "${word}"`);
   document.getElementById('mic-btn').disabled = false;
@@ -471,12 +359,21 @@ async function startPronunTest(word, phonetic, el) {
 function clearPronunTest() {
   pronunTestWord = null;
   document.getElementById('pronun-mode-banner').style.display = 'none';
+  recordState = 'idle'; elapsed = 0; updateArc(0);
+  document.getElementById('countdown').textContent = '';
+  document.getElementById('try-again-btn').style.display = 'none';
+  document.getElementById('mic-btn').disabled = false;
+  document.getElementById('mic-btn').classList.remove('recording');
+  document.getElementById('mic-icon').innerHTML = `<rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/><path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`;
+  document.getElementById('p1').classList.remove('on');
+  document.getElementById('p2').classList.remove('on');
+  stopWaveform();
   setStatus('Tap the microphone to speak');
 }
 
 function evaluatePronunciation(transcript) {
   if (!pronunTestWord) return false;
-  const { word, phonetic, el } = pronunTestWord;
+  const { word, el } = pronunTestWord;
   const t = transcript.toLowerCase().trim();
   const target = word.toLowerCase();
   const isClose = t.includes(target) || target.includes(t) || levenshtein(t, target) <= 2 || t.split(' ').some(w => levenshtein(w, target) <= 1);
@@ -610,21 +507,18 @@ function addMessage(role, content) {
   row.className = `msg-row ${role}`;
   if (role === 'assistant') {
     const speakBtn = document.createElement('button');
-    speakBtn.className = 'speak-btn';
-    speakBtn.title = 'Replay';
+    speakBtn.className = 'speak-btn'; speakBtn.title = 'Replay';
     speakBtn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.8"/></svg>`;
     speakBtn.onclick = () => speakText(content, speakBtn);
     row.innerHTML = `<div class="role-label">Orchid Pavilion</div><div class="bubble-row"></div>`;
     const br = row.querySelector('.bubble-row');
     const bubble = document.createElement('div');
-    bubble.className = 'bubble assistant';
-    bubble.textContent = content;
+    bubble.className = 'bubble assistant'; bubble.textContent = content;
     br.appendChild(bubble); br.appendChild(speakBtn);
   } else {
     row.innerHTML = `<div class="role-label">You</div>`;
     const bubble = document.createElement('div');
-    bubble.className = 'bubble user';
-    bubble.textContent = content;
+    bubble.className = 'bubble user'; bubble.textContent = content;
     row.appendChild(bubble);
   }
   scroll.appendChild(row); scroll.scrollTop = scroll.scrollHeight;
