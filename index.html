@@ -48,22 +48,12 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
 #main-app { width: 100%; height: 100vh; display: none; flex-direction: column; align-items: center; background: var(--bg); }
 
-header {
-  width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--border);
-  padding: 12px 20px 12px; flex-shrink: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-}
+header { width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 12px 20px 12px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
 .header-top { display: flex; align-items: center; gap: 10px; }
 .header-leaf { font-size: 18px; }
 .header-titles h1 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; color: var(--accent); line-height: 1.2; text-align: center; }
 .header-titles .lesson-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; text-align: center; }
-.new-lesson-btn {
-  width: 100%; max-width: 320px; background: none; border: 1.5px solid var(--accent);
-  border-radius: 6px; color: var(--accent); font-family: 'DM Sans', sans-serif;
-  font-size: 12px; font-weight: 600; padding: 7px 12px; cursor: pointer;
-  transition: all 0.2s; letter-spacing: 0.04em;
-}
+.new-lesson-btn { width: 100%; max-width: 320px; background: none; border: 1.5px solid var(--accent); border-radius: 6px; color: var(--accent); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; padding: 7px 12px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em; }
 .new-lesson-btn:hover { background: var(--accent); color: #fff; }
 
 #pronun-bar { width: 100%; max-width: 600px; flex-shrink: 0; background: var(--accent-light); border-bottom: 1px solid rgba(45,106,79,0.15); padding: 10px 16px; display: none; }
@@ -72,9 +62,7 @@ header {
 .pronun-words { display: flex; gap: 6px; flex-wrap: wrap; }
 .pronun-word { background: var(--bg-2); border: 1.5px solid var(--border-2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.18s; }
 .pronun-word:hover { border-color: var(--accent); color: var(--accent); }
-.pronun-word.testing { border-color: var(--warning); background: #fef9f0; color: var(--warning); }
-.pronun-word.passed { border-color: var(--success); background: #f0faf4; color: var(--success); }
-.pronun-word.failed { border-color: var(--error); background: #fdf0f0; color: var(--error); }
+.pronun-word.playing-word { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
 .pronun-hint { font-size: 10px; color: var(--text-muted); font-style: italic; }
 
 #chat-scroll { flex: 1; width: 100%; max-width: 600px; overflow-y: auto; padding: 20px 16px 12px; display: flex; flex-direction: column; gap: 14px; }
@@ -145,8 +133,6 @@ header {
 .send-btn { width: 42px; height: 42px; flex-shrink: 0; background: var(--accent); border: none; border-radius: 10px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .send-btn:hover { background: var(--accent-2); }
 .send-btn:disabled { background: var(--bg-4); color: var(--text-muted); cursor: not-allowed; }
-
-#pronun-mode-banner { display: none; background: #fff8f0; border: 1.5px solid var(--warning); border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; font-size: 12px; color: var(--warning); font-weight: 500; text-align: center; }
 </style>
 </head>
 <body>
@@ -183,7 +169,7 @@ header {
     <div class="pronun-bar-inner">
       <span class="pronun-label">🎯 Pronunciation</span>
       <div class="pronun-words" id="pronun-words"></div>
-      <span class="pronun-hint">Tap a word — hear it, then repeat</span>
+      <span class="pronun-hint">Tap a word to hear the correct pronunciation</span>
     </div>
   </div>
 
@@ -192,7 +178,6 @@ header {
   </div>
 
   <div id="input-panel">
-    <div id="pronun-mode-banner"></div>
     <div class="mode-row">
       <div class="toggle-track">
         <button class="toggle-btn active" id="btn-voice" onclick="setMode('voice')">Voice</button>
@@ -247,7 +232,7 @@ const LESSONS = [
   { id:'M2L3', module:2, lesson:3, name:'Taking Drink Orders', focus:'Water, wine, beer, cocktails, hot beverages. Wine pairing language, upselling to a bottle.', brandOverrides:['Wine pairing: "May I suggest a glass of our Sancerre Blanc? It pairs beautifully with the Seared Scallops."','Bottle upsell: "Since you are both enjoying wine this evening, a bottle would be wonderful value. Shall I bring one to the table?"','Unavailable wine: "I am afraid that wine is no longer available. May I suggest something equally lovely?"'], viPronunciation:['sparkling','Sancerre','champagne'], phonetic:['SPAR-kling','san-SAIR','sham-PAIN'] },
   { id:'M2L4', module:2, lesson:4, name:'Confirming the Order', focus:'Repeating the full order back clearly before leaving the table. Confirming special requests and modifications.', brandOverrides:['ALWAYS confirm the complete order before leaving the table','Special requests: "Of course. I will personally ensure the kitchen is fully aware."','After confirming: "Thank you. I will have everything with you shortly."'], viPronunciation:['confirm','certainly','absolutely'], phonetic:['kun-FIRM','SUR-ten-lee','ab-SO-loot-lee'] },
   { id:'M3L1', module:3, lesson:1, name:'Dietary Requirements', focus:'Allergies, vegan, vegetarian, gluten-free, halal, nut-free, lactose intolerant.', brandOverrides:['Allergy response: "I want to give you completely accurate information. Please allow me one moment to check with our chef." — NEVER guess','Preparing the dish: "We take food allergies very seriously at The Orchid Pavilion. Your dish will be prepared in a dedicated area."','NEVER say "I think it is okay" — always confirm with the kitchen first'], viPronunciation:['vegetarian','allergy','gluten'], phonetic:['vej-e-TAIR-ee-un','AL-er-jee','GLOO-ten'] },
-  { id:'M3L2', module:3, lesson:2, name:'Handling Special Requests', focus:'Modifications to orders, substitutions, additions, removing ingredients, sauce on the side.', brandOverrides:['For substitutions: "Certainly, I would be happy to arrange that for you." — make every request feel easy','If unsure: "Let me check with the kitchen to ensure we can do that perfectly for you."','Upcharge: "Yes, we can do that. There is a small additional charge of [amount]. Is that quite alright?"'], viPronunciation:['substitute','certainly','preference'], phonetic:['SUB-stit-yoot','SUR-ten-lee','PREF-er-ens'] },
+  { id:'M3L2', module:3, lesson:2, name:'Handling Special Requests', focus:'Modifications to orders, substitutions, additions, removing ingredients, sauce on the side.', brandOverrides:['For substitutions: "Certainly, I would be happy to arrange that for you."','If unsure: "Let me check with the kitchen to ensure we can do that perfectly for you."','Upcharge: "Yes, we can do that. There is a small additional charge of [amount]. Is that quite alright?"'], viPronunciation:['substitute','certainly','preference'], phonetic:['SUB-stit-yoot','SUR-ten-lee','PREF-er-ens'] },
   { id:'M3L3', module:3, lesson:3, name:'Responding to Complaints', focus:'The 5-Step Recovery Protocol: Acknowledge, Act, Return, Follow up, Escalate.', brandOverrides:['Step 1: "I completely understand, and I sincerely apologise. That is not the standard we hold at The Orchid Pavilion."','Step 2: "Please allow me to speak with our chef personally. I will return to you in just a few moments."','Step 3: "Thank you so much for your patience. We are preparing a fresh dish for you right now. It will be with you in approximately [specific time]."','NEVER say "Sorry, sorry!" — ALWAYS say "I sincerely apologise for the inconvenience."'], viPronunciation:['apologise','inconvenience','patience'], phonetic:['a-POL-o-jize','in-kun-VEEN-yens','PAY-shens'] },
   { id:'M3L4', module:3, lesson:4, name:'Ensuring Guest Satisfaction', focus:'Checking in after serving food and after resolving problems. Following up at the right moment.', brandOverrides:['Check-in: "How is everything tasting for you this evening?" — NEVER "Is everything okay?"','After complaint resolution: "I wanted to personally check that everything is to your satisfaction. It truly means a great deal to us."','Return within 5 minutes of a replacement dish being served'], viPronunciation:['satisfaction','personally','wonderful'], phonetic:['sat-is-FAK-shun','PUR-sun-a-lee','WUN-der-ful'] },
   { id:'M4L1', module:4, lesson:1, name:'Presenting the Bill', focus:'Presenting the bill politely, split payments, contactless, receipts. Dessert upsell before the bill.', brandOverrides:['Dessert upsell: "Before I bring your bill, may I tempt you with our Creme Brulee? The caramel sugar is torched fresh at your table."','Presenting the bill: "Whenever you are ready, I have your bill here for you." — NEVER just say "Here is your bill"','NEVER ask "Do you want dessert?" — always offer something specific with a description'], viPronunciation:['receipt','contactless','brulee'], phonetic:['re-SEET','KON-takt-les','broo-LAY'] },
@@ -262,8 +247,7 @@ let staffName = localStorage.getItem('op_name') || '';
 let selectedLesson = null, chatHistory = [], recordState = 'idle', elapsed = 0;
 let mediaRecorder = null, chunks = [], timerInterval = null, animFrame = null;
 let stream = null, audioCtx = null, analyser = null, isWaiting = false;
-let waveBarEls = [], currentAudio = null, pronunTestWord = null;
-let ttsQueue = [], ttsPlaying = false, ttsBtnEl = null;
+let waveBarEls = [], currentAudio = null;
 const MAX_SECS = 45;
 
 function buildLessonGrid() {
@@ -299,8 +283,7 @@ function startSession() {
 }
 
 function newLesson() {
-  stopTTS();
-  chatHistory = []; pronunTestWord = null;
+  stopTTS(); chatHistory = [];
   document.getElementById('chat-scroll').innerHTML = '<div class="empty-state" id="empty-state"><span>🌿</span><p>Starting your session...</p></div>';
   document.getElementById('setup-screen').style.display = 'flex';
   document.getElementById('main-app').style.display = 'none';
@@ -313,27 +296,20 @@ function buildPronunBar() {
   const bar = document.getElementById('pronun-bar');
   const wordsEl = document.getElementById('pronun-words');
   bar.style.display = 'block'; wordsEl.innerHTML = '';
-  selectedLesson.viPronunciation.forEach((word, i) => {
+  selectedLesson.viPronunciation.forEach((word) => {
     const span = document.createElement('span');
     span.className = 'pronun-word';
     span.textContent = word;
-    span.title = selectedLesson.phonetic[i];
-    span.onclick = () => startPronunTest(word, selectedLesson.phonetic[i], span);
+    span.title = 'Tap to hear';
+    span.onclick = () => playPronunciation(word, span);
     wordsEl.appendChild(span);
   });
 }
 
-async function startPronunTest(word, phonetic, el) {
-  if (isWaiting) return;
-  pronunTestWord = { word, phonetic, el };
-  document.querySelectorAll('.pronun-word').forEach(w => w.classList.remove('testing'));
-  el.classList.add('testing');
-  setMode('voice');
-  document.getElementById('mic-btn').disabled = true;
-  const banner = document.getElementById('pronun-mode-banner');
-  banner.style.display = 'block';
-  banner.textContent = '🔊 Listen carefully to the model pronunciation...';
-  setStatus('Playing model pronunciation...');
+async function playPronunciation(word, el) {
+  if (el.classList.contains('playing-word')) return;
+  document.querySelectorAll('.pronun-word').forEach(w => w.classList.remove('playing-word'));
+  el.classList.add('playing-word');
   try {
     const res = await fetch('https://api.openai.com/v1/audio/speech', {
       method: 'POST',
@@ -343,33 +319,11 @@ async function startPronunTest(word, phonetic, el) {
     if (res.ok) {
       const url = URL.createObjectURL(await res.blob());
       const audio = new Audio(url);
-      await new Promise(resolve => { audio.onended = resolve; audio.onerror = resolve; audio.play(); });
-    }
-  } catch(e) { console.error('Pronun TTS:', e); }
-  banner.textContent = `🎤 Your turn — say "${word}" then tap the mic`;
-  setStatus(`Say it now: "${word}"`);
-  document.getElementById('mic-btn').disabled = false;
-}
-
-function clearPronunTest() {
-  pronunTestWord = null;
-  document.getElementById('pronun-mode-banner').style.display = 'none';
-  recordState = 'idle'; elapsed = 0; updateArc(0);
-  document.getElementById('countdown').textContent = '';
-  document.getElementById('try-again-btn').style.display = 'none';
-  document.getElementById('mic-btn').disabled = false;
-  document.getElementById('mic-btn').classList.remove('recording');
-  document.getElementById('mic-icon').innerHTML = `<rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/><path d="M5 10a7 7 0 0 0 14 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="9" y1="22" x2="15" y2="22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`;
-  document.getElementById('p1').classList.remove('on');
-  document.getElementById('p2').classList.remove('on');
-  stopWaveform();
-  setStatus('Tap the microphone to speak');
-}
-
-function levenshtein(a, b) {
-  const m=a.length,n=b.length,dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
-  return dp[m][n];
+      audio.onended = () => el.classList.remove('playing-word');
+      audio.onerror = () => el.classList.remove('playing-word');
+      audio.play();
+    } else { el.classList.remove('playing-word'); }
+  } catch(e) { el.classList.remove('playing-word'); }
 }
 
 function buildSystemPrompt(lesson) {
@@ -403,197 +357,76 @@ Always use: "May I help you", "Certainly", "Just one moment please", "It was my 
 Student messages may come from voice transcription. Focus on meaning, not spelling.`;
 }
 
-// ── Streaming + TTS Queue ─────────────────────────────────────────────────────
-
 function stripMarkdown(text) {
   return text.replace(/\*\*/g,'').replace(/\*/g,'').replace(/_/g,'')
     .replace(/#{1,6}\s/g,'').replace(/`/g,'').replace(/\[([^\]]+)\]\([^\)]+\)/g,'$1').trim();
 }
 
-function splitSentences(text) {
-  return text.match(/[^.!?]+[.!?]+/g) || [text];
-}
-
-async function flushTTSQueue() {
-  if (ttsPlaying || ttsQueue.length === 0) return;
-  ttsPlaying = true;
-  const sentence = ttsQueue.shift();
-  try {
-    const res = await fetch('https://api.openai.com/v1/audio/speech', {
-      method:'POST',
-      headers:{'Authorization':`Bearer ${openaiKey}`,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'tts-1',voice:'nova',input:sentence,speed:1.0})
-    });
-    if (!res.ok) throw new Error('TTS failed');
-    const url = URL.createObjectURL(await res.blob());
-    currentAudio = new Audio(url);
-    if (ttsBtnEl) ttsBtnEl.classList.add('playing');
-    currentAudio.onended = () => {
-      ttsPlaying = false; currentAudio = null;
-      if (ttsQueue.length > 0) flushTTSQueue();
-      else { if (ttsBtnEl) ttsBtnEl.classList.remove('playing'); ttsBtnEl = null; }
-    };
-    currentAudio.play();
-  } catch(e) {
-    ttsPlaying = false;
-    if (ttsQueue.length > 0) flushTTSQueue();
-    else { if (ttsBtnEl) ttsBtnEl.classList.remove('playing'); ttsBtnEl = null; }
-  }
-}
-
-function enqueueTTS(sentence, btnEl) {
-  if (btnEl) ttsBtnEl = btnEl;
-  ttsQueue.push(stripMarkdown(sentence));
-  flushTTSQueue();
-}
-
 function stopTTS() {
-  ttsQueue = []; ttsPlaying = false;
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  if (ttsBtnEl) { ttsBtnEl.classList.remove('playing'); ttsBtnEl = null; }
   document.querySelectorAll('.speak-btn.playing').forEach(b=>b.classList.remove('playing'));
 }
 
 async function speakText(text, btnEl) {
   stopTTS();
-  const sentences = splitSentences(stripMarkdown(text));
-  ttsBtnEl = btnEl;
-  sentences.forEach(s => { if(s.trim()) ttsQueue.push(s.trim()); });
-  flushTTSQueue();
+  if (btnEl) btnEl.classList.add('playing');
+  try {
+    const res = await fetch('https://api.openai.com/v1/audio/speech', {
+      method:'POST',
+      headers:{'Authorization':`Bearer ${openaiKey}`,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'tts-1',voice:'nova',input:stripMarkdown(text),speed:1.0})
+    });
+    if (!res.ok) throw new Error('TTS failed');
+    const url = URL.createObjectURL(await res.blob());
+    currentAudio = new Audio(url);
+    currentAudio.onended = () => { if (btnEl) btnEl.classList.remove('playing'); currentAudio=null; };
+    currentAudio.play();
+  } catch(e) { if (btnEl) btnEl.classList.remove('playing'); }
 }
 
-async function callClaudeStreaming(userMessage, onSentence, onDone, onError) {
+async function callClaude(userMessage) {
   const messages = userMessage
     ? [...chatHistory, {role:'user',content:userMessage}]
     : [{role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`}];
-  let res;
-  try {
-    res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,stream:true,system:buildSystemPrompt(selectedLesson),messages})
-    });
-  } catch(e) { onError(e); return; }
-  if (!res.ok) { onError(new Error(`API ${res.status}`)); return; }
-
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-  let fullText = '', buffer = '';
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    const lines = decoder.decode(value, {stream:true}).split('\n');
-    for (const line of lines) {
-      if (!line.startsWith('data:')) continue;
-      const data = line.slice(5).trim();
-      if (data === '[DONE]') continue;
-      try {
-        const parsed = JSON.parse(data);
-        if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
-          fullText += parsed.delta.text;
-          buffer += parsed.delta.text;
-          const match = buffer.match(/^(.*[.!?])\s*(.*)$/s);
-          if (match) {
-            const sentence = match[1].trim();
-            buffer = match[2] || '';
-            if (sentence) onSentence(sentence, fullText);
-          }
-        }
-      } catch(e) {}
-    }
-  }
-  if (buffer.trim()) onSentence(buffer.trim(), fullText);
-  onDone(fullText);
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:180,system:buildSystemPrompt(selectedLesson),messages})
+  });
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  return (await res.json()).content[0].text;
 }
-
-// ── Pronunciation evaluation via Claude ───────────────────────────────────────
-
-async function evaluatePronunciationWithClaude(transcript, word, phonetic) {
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001', max_tokens:120,
-        system:`You are a strict pronunciation evaluator for Vietnamese English learners. You receive a Whisper voice transcript and a target word. Judge whether the student said the target word correctly. Be strict — wrong stress pattern, dropped final consonants, or substituting sounds (r to l, tr to ch) should be marked incorrect. Respond with JSON only: {"pass": true or false, "feedback": "one short encouraging sentence"}`,
-        messages:[{role:'user',content:`Target word: "${word}" (correct pronunciation: ${phonetic})\nWhisper transcript: "${transcript}"\nDid the student pronounce the target word correctly?`}]
-      })
-    });
-    if (!res.ok) throw new Error('eval failed');
-    const text = (await res.json()).content[0].text.trim();
-    return JSON.parse(text.replace(/```json|```/g,'').trim());
-  } catch(e) {
-    const t = transcript.toLowerCase().trim();
-    const pass = t.includes(word.toLowerCase()) || levenshtein(t, word.toLowerCase()) <= 1;
-    return { pass, feedback: pass ? `Good pronunciation of "${word}"!` : `Try again — focus on the ${phonetic} pattern.` };
-  }
-}
-
-// ── Session ──────────────────────────────────────────────────────────────────
 
 async function beginLesson() {
   setWaiting(true); showThinking();
-  let msgEl = null, firstSentence = true;
   try {
-    await callClaudeStreaming('',
-      (sentence, fullSoFar) => {
-        if (firstSentence) { hideThinking(); msgEl = addMessage('assistant', fullSoFar); firstSentence = false; }
-        else if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullSoFar; }
-        enqueueTTS(sentence, msgEl ? msgEl.querySelector('.speak-btn') : null);
-      },
-      (fullText) => {
-        if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullText; }
-        chatHistory.push({role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`});
-        chatHistory.push({role:'assistant',content:fullText});
-        setWaiting(false);
-      },
-      () => { hideThinking(); addMessage('assistant',`Hello ${staffName}! Welcome to ${selectedLesson.name}. Do you have any questions before we begin?`); setWaiting(false); }
-    );
-  } catch(e) { hideThinking(); addMessage('assistant',`Hello ${staffName}! Welcome to ${selectedLesson.name}. Do you have any questions before we begin?`); setWaiting(false); }
+    const reply = await callClaude('');
+    hideThinking();
+    const msgEl = addMessage('assistant', reply);
+    chatHistory.push({role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`});
+    chatHistory.push({role:'assistant',content:reply});
+    speakText(reply, msgEl.querySelector('.speak-btn'));
+  } catch(e) {
+    hideThinking();
+    addMessage('assistant', `Hello ${staffName}! Welcome to ${selectedLesson.name}. Do you have any questions before we begin?`);
+  }
+  setWaiting(false);
 }
 
 async function sendMessage(userText) {
   if (!userText.trim() || isWaiting) return;
-
-  if (pronunTestWord) {
-    addMessage('user', userText);
-    const { word, phonetic, el } = pronunTestWord;
-    clearPronunTest();
-    setWaiting(true);
-    const result = await evaluatePronunciationWithClaude(userText, word, phonetic);
-    el.classList.remove('testing','passed','failed');
-    el.classList.add(result.pass ? 'passed' : 'failed');
-    const msgEl = addMessage('assistant', result.feedback);
-    chatHistory.push({role:'assistant',content:result.feedback});
-    speakText(result.feedback, msgEl.querySelector('.speak-btn'));
-    setWaiting(false);
-    return;
-  }
-
   addMessage('user', userText);
   chatHistory.push({role:'user',content:userText});
   setWaiting(true); showThinking();
-  let msgEl = null, firstSentence = true;
-
   try {
-    await callClaudeStreaming(userText,
-      (sentence, fullSoFar) => {
-        if (firstSentence) { hideThinking(); msgEl = addMessage('assistant', fullSoFar); firstSentence = false; }
-        else if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullSoFar; }
-        enqueueTTS(sentence, msgEl ? msgEl.querySelector('.speak-btn') : null);
-      },
-      (fullText) => {
-        if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullText; }
-        chatHistory.push({role:'assistant',content:fullText});
-        setWaiting(false); resetVoice();
-      },
-      () => { hideThinking(); addMessage('assistant','Something went wrong. Please try again.'); setWaiting(false); }
-    );
-  } catch(e) { hideThinking(); addMessage('assistant','Something went wrong. Please try again.'); setWaiting(false); }
+    const reply = await callClaude(userText);
+    hideThinking();
+    const msgEl = addMessage('assistant', reply);
+    chatHistory.push({role:'assistant',content:reply});
+    speakText(reply, msgEl.querySelector('.speak-btn'));
+  } catch(e) { hideThinking(); addMessage('assistant','Something went wrong. Please try again.'); }
+  setWaiting(false); resetVoice();
 }
-
-// ── UI ────────────────────────────────────────────────────────────────────────
 
 function addMessage(role, content) {
   const empty = document.getElementById('empty-state');
@@ -638,7 +471,7 @@ function setWaiting(val) {
   document.getElementById('mic-btn').disabled = val;
   document.getElementById('text-input').disabled = val;
   document.getElementById('send-btn').disabled = val || !document.getElementById('text-input').value.trim();
-  if (!val && recordState==='idle' && !pronunTestWord) setStatus('Tap the microphone to speak');
+  if (!val && recordState==='idle') setStatus('Tap the microphone to speak');
 }
 
 function setStatus(msg, isErr) { const el=document.getElementById('status-text'); el.textContent=msg; el.className='status-text'+(isErr?' err':''); }
@@ -688,7 +521,7 @@ async function startRecording(){
     document.getElementById('mic-icon').innerHTML=`<rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/>`;
     document.getElementById('p1').classList.add('on');document.getElementById('p2').classList.add('on');
     timerInterval=setInterval(()=>{elapsed++;document.getElementById('countdown').textContent=`${MAX_SECS-elapsed}s`;updateArc(elapsed/MAX_SECS);if(elapsed>=MAX_SECS)stopRecording();},1000);
-    setStatus(pronunTestWord?`Listening for "${pronunTestWord.word}"...`:'');
+    setStatus('');
   }catch(e){recordState='error';setStatus('Microphone access denied.',true);document.getElementById('try-again-btn').style.display='block';}
 }
 
@@ -716,7 +549,7 @@ async function transcribeAndSend(blob){
   }catch(e){recordState='error';setStatus('Transcription failed. Check your OpenAI key.',true);document.getElementById('try-again-btn').style.display='block';document.getElementById('mic-btn').disabled=false;}
 }
 
-function resetVoice(){recordState='idle';elapsed=0;updateArc(0);document.getElementById('countdown').textContent='';document.getElementById('try-again-btn').style.display='none';document.getElementById('mic-btn').disabled=false;stopWaveform();if(!isWaiting&&!pronunTestWord)setStatus('Tap the microphone to speak');}
+function resetVoice(){recordState='idle';elapsed=0;updateArc(0);document.getElementById('countdown').textContent='';document.getElementById('try-again-btn').style.display='none';document.getElementById('mic-btn').disabled=false;stopWaveform();if(!isWaiting)setStatus('Tap the microphone to speak');}
 
 function handleTypeSubmit(){const input=document.getElementById('text-input');const text=input.value.trim();if(!text||isWaiting)return;input.value='';autoResize(input);document.getElementById('send-btn').disabled=true;sendMessage(text);}
 function handleKeyDown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();handleTypeSubmit();}}
