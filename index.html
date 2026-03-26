@@ -9,37 +9,21 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f5f2ee;
-  --bg-2: #ffffff;
-  --bg-3: #ede9e3;
-  --bg-4: #e4dfd7;
-  --accent: #2d6a4f;
-  --accent-2: #40916c;
-  --accent-light: #d8f3dc;
-  --accent-dim: rgba(45,106,79,0.1);
-  --text: #1a1a1a;
-  --text-2: #444;
-  --text-muted: #888;
-  --border: rgba(0,0,0,0.08);
-  --border-2: rgba(0,0,0,0.14);
-  --error: #c0392b;
-  --warning: #e67e22;
-  --success: #27ae60;
-  --shadow: 0 2px 12px rgba(0,0,0,0.06);
-  --shadow-lg: 0 4px 24px rgba(0,0,0,0.1);
+  --bg: #f5f2ee; --bg-2: #ffffff; --bg-3: #ede9e3; --bg-4: #e4dfd7;
+  --accent: #2d6a4f; --accent-2: #40916c; --accent-light: #d8f3dc;
+  --accent-dim: rgba(45,106,79,0.1); --text: #1a1a1a; --text-2: #444;
+  --text-muted: #888; --border: rgba(0,0,0,0.08); --border-2: rgba(0,0,0,0.14);
+  --error: #c0392b; --warning: #e67e22; --success: #27ae60;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06); --shadow-lg: 0 4px 24px rgba(0,0,0,0.1);
 }
 
 html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow: hidden; }
 
-#setup-screen {
-  position: fixed; inset: 0; background: var(--bg);
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-  padding: 32px 20px 40px; z-index: 100; overflow-y: auto;
-}
+#setup-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 32px 20px 40px; z-index: 100; overflow-y: auto; }
 
 .setup-logo { text-align: center; margin-bottom: 28px; }
 .setup-logo .leaf { font-size: 28px; margin-bottom: 8px; display: block; }
-.setup-logo h1 { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 5vw, 30px); font-weight: 400; color: var(--accent); letter-spacing: 0.01em; }
+.setup-logo h1 { font-family: 'DM Serif Display', serif; font-size: clamp(22px, 5vw, 30px); font-weight: 400; color: var(--accent); }
 .setup-logo p { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
 
 .setup-card { width: 100%; max-width: 440px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; box-shadow: var(--shadow-lg); }
@@ -64,13 +48,23 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 
 #main-app { width: 100%; height: 100vh; display: none; flex-direction: column; align-items: center; background: var(--bg); }
 
-header { width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--border); padding: 14px 20px 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
-.header-left { display: flex; align-items: center; gap: 10px; }
+header {
+  width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--border);
+  padding: 12px 20px 12px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.header-top { display: flex; align-items: center; gap: 10px; }
 .header-leaf { font-size: 18px; }
-.header-titles h1 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; color: var(--accent); line-height: 1.2; }
-.header-titles .lesson-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; }
-.new-lesson-btn { background: none; border: 1px solid var(--border-2); border-radius: 6px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; padding: 6px 12px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-.new-lesson-btn:hover { border-color: var(--accent); color: var(--accent); }
+.header-titles h1 { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 400; color: var(--accent); line-height: 1.2; text-align: center; }
+.header-titles .lesson-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; text-align: center; }
+.new-lesson-btn {
+  width: 100%; max-width: 320px; background: none; border: 1.5px solid var(--accent);
+  border-radius: 6px; color: var(--accent); font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 600; padding: 7px 12px; cursor: pointer;
+  transition: all 0.2s; letter-spacing: 0.04em;
+}
+.new-lesson-btn:hover { background: var(--accent); color: #fff; }
 
 #pronun-bar { width: 100%; max-width: 600px; flex-shrink: 0; background: var(--accent-light); border-bottom: 1px solid rgba(45,106,79,0.15); padding: 10px 16px; display: none; }
 .pronun-bar-inner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -175,14 +169,14 @@ header { width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--bo
 
 <div id="main-app">
   <header>
-    <div class="header-left">
+    <div class="header-top">
       <div class="header-leaf">🌿</div>
       <div class="header-titles">
         <h1>The Orchid Pavilion</h1>
         <div class="lesson-tag" id="lesson-tag">Loading...</div>
       </div>
     </div>
-    <button class="new-lesson-btn" onclick="newLesson()">Change Lesson</button>
+    <button class="new-lesson-btn" onclick="newLesson()">↩ Change Lesson</button>
   </header>
 
   <div id="pronun-bar">
@@ -269,6 +263,7 @@ let selectedLesson = null, chatHistory = [], recordState = 'idle', elapsed = 0;
 let mediaRecorder = null, chunks = [], timerInterval = null, animFrame = null;
 let stream = null, audioCtx = null, analyser = null, isWaiting = false;
 let waveBarEls = [], currentAudio = null, pronunTestWord = null;
+let ttsQueue = [], ttsPlaying = false, ttsBtnEl = null;
 const MAX_SECS = 45;
 
 function buildLessonGrid() {
@@ -304,7 +299,7 @@ function startSession() {
 }
 
 function newLesson() {
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  stopTTS();
   chatHistory = []; pronunTestWord = null;
   document.getElementById('chat-scroll').innerHTML = '<div class="empty-state" id="empty-state"><span>🌿</span><p>Starting your session...</p></div>';
   document.getElementById('setup-screen').style.display = 'flex';
@@ -371,30 +366,6 @@ function clearPronunTest() {
   setStatus('Tap the microphone to speak');
 }
 
-function evaluatePronunciation(transcript) {
-  if (!pronunTestWord) return false;
-  const { word, el } = pronunTestWord;
-  const t = transcript.toLowerCase().trim();
-  const target = word.toLowerCase();
-  const isClose = t.includes(target) || target.includes(t) || levenshtein(t, target) <= 2 || t.split(' ').some(w => levenshtein(w, target) <= 1);
-  el.classList.remove('testing','passed','failed');
-  if (isClose) {
-    el.classList.add('passed');
-    const feedback = `Well done! Your pronunciation of "${word}" was clear and correct.`;
-    addMessage('assistant', feedback);
-    chatHistory.push({role:'assistant', content: feedback});
-    speakText(feedback, null);
-  } else {
-    el.classList.add('failed');
-    const feedback = `Almost! I heard "${transcript}" — tap the word again to hear it once more and try again.`;
-    addMessage('assistant', feedback);
-    chatHistory.push({role:'assistant', content: feedback});
-    speakText(feedback, null);
-  }
-  clearPronunTest();
-  return true;
-}
-
 function levenshtein(a, b) {
   const m=a.length,n=b.length,dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
   for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
@@ -432,72 +403,197 @@ Always use: "May I help you", "Certainly", "Just one moment please", "It was my 
 Student messages may come from voice transcription. Focus on meaning, not spelling.`;
 }
 
-async function callClaude(userMessage) {
-  const messages = userMessage
-    ? [...chatHistory, {role:'user',content:userMessage}]
-    : [{role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`}];
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:buildSystemPrompt(selectedLesson),messages})
-  });
-  if (!res.ok) throw new Error(`API ${res.status}`);
-  return (await res.json()).content[0].text;
-}
+// ── Streaming + TTS Queue ─────────────────────────────────────────────────────
 
 function stripMarkdown(text) {
-  return text.replace(/\*\*/g,'').replace(/\*/g,'').replace(/_/g,'').replace(/#{1,6}\s/g,'').replace(/`/g,'').trim();
+  return text.replace(/\*\*/g,'').replace(/\*/g,'').replace(/_/g,'')
+    .replace(/#{1,6}\s/g,'').replace(/`/g,'').replace(/\[([^\]]+)\]\([^\)]+\)/g,'$1').trim();
 }
 
-async function speakText(text, btnEl) {
-  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
-  document.querySelectorAll('.speak-btn.playing').forEach(b=>b.classList.remove('playing'));
-  if (btnEl) btnEl.classList.add('playing');
+function splitSentences(text) {
+  return text.match(/[^.!?]+[.!?]+/g) || [text];
+}
+
+async function flushTTSQueue() {
+  if (ttsPlaying || ttsQueue.length === 0) return;
+  ttsPlaying = true;
+  const sentence = ttsQueue.shift();
   try {
     const res = await fetch('https://api.openai.com/v1/audio/speech', {
       method:'POST',
       headers:{'Authorization':`Bearer ${openaiKey}`,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'tts-1',voice:'nova',input:stripMarkdown(text),speed:1.0})
+      body:JSON.stringify({model:'tts-1',voice:'nova',input:sentence,speed:1.0})
     });
     if (!res.ok) throw new Error('TTS failed');
     const url = URL.createObjectURL(await res.blob());
     currentAudio = new Audio(url);
-    currentAudio.onended = () => { if (btnEl) btnEl.classList.remove('playing'); currentAudio=null; };
+    if (ttsBtnEl) ttsBtnEl.classList.add('playing');
+    currentAudio.onended = () => {
+      ttsPlaying = false; currentAudio = null;
+      if (ttsQueue.length > 0) flushTTSQueue();
+      else { if (ttsBtnEl) ttsBtnEl.classList.remove('playing'); ttsBtnEl = null; }
+    };
     currentAudio.play();
-  } catch(e) { if (btnEl) btnEl.classList.remove('playing'); }
+  } catch(e) {
+    ttsPlaying = false;
+    if (ttsQueue.length > 0) flushTTSQueue();
+    else { if (ttsBtnEl) ttsBtnEl.classList.remove('playing'); ttsBtnEl = null; }
+  }
 }
+
+function enqueueTTS(sentence, btnEl) {
+  if (btnEl) ttsBtnEl = btnEl;
+  ttsQueue.push(stripMarkdown(sentence));
+  flushTTSQueue();
+}
+
+function stopTTS() {
+  ttsQueue = []; ttsPlaying = false;
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (ttsBtnEl) { ttsBtnEl.classList.remove('playing'); ttsBtnEl = null; }
+  document.querySelectorAll('.speak-btn.playing').forEach(b=>b.classList.remove('playing'));
+}
+
+async function speakText(text, btnEl) {
+  stopTTS();
+  const sentences = splitSentences(stripMarkdown(text));
+  ttsBtnEl = btnEl;
+  sentences.forEach(s => { if(s.trim()) ttsQueue.push(s.trim()); });
+  flushTTSQueue();
+}
+
+async function callClaudeStreaming(userMessage, onSentence, onDone, onError) {
+  const messages = userMessage
+    ? [...chatHistory, {role:'user',content:userMessage}]
+    : [{role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`}];
+  let res;
+  try {
+    res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,stream:true,system:buildSystemPrompt(selectedLesson),messages})
+    });
+  } catch(e) { onError(e); return; }
+  if (!res.ok) { onError(new Error(`API ${res.status}`)); return; }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let fullText = '', buffer = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const lines = decoder.decode(value, {stream:true}).split('\n');
+    for (const line of lines) {
+      if (!line.startsWith('data:')) continue;
+      const data = line.slice(5).trim();
+      if (data === '[DONE]') continue;
+      try {
+        const parsed = JSON.parse(data);
+        if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+          fullText += parsed.delta.text;
+          buffer += parsed.delta.text;
+          const match = buffer.match(/^(.*[.!?])\s*(.*)$/s);
+          if (match) {
+            const sentence = match[1].trim();
+            buffer = match[2] || '';
+            if (sentence) onSentence(sentence, fullText);
+          }
+        }
+      } catch(e) {}
+    }
+  }
+  if (buffer.trim()) onSentence(buffer.trim(), fullText);
+  onDone(fullText);
+}
+
+// ── Pronunciation evaluation via Claude ───────────────────────────────────────
+
+async function evaluatePronunciationWithClaude(transcript, word, phonetic) {
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':anthropicKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001', max_tokens:120,
+        system:`You are a strict pronunciation evaluator for Vietnamese English learners. You receive a Whisper voice transcript and a target word. Judge whether the student said the target word correctly. Be strict — wrong stress pattern, dropped final consonants, or substituting sounds (r to l, tr to ch) should be marked incorrect. Respond with JSON only: {"pass": true or false, "feedback": "one short encouraging sentence"}`,
+        messages:[{role:'user',content:`Target word: "${word}" (correct pronunciation: ${phonetic})\nWhisper transcript: "${transcript}"\nDid the student pronounce the target word correctly?`}]
+      })
+    });
+    if (!res.ok) throw new Error('eval failed');
+    const text = (await res.json()).content[0].text.trim();
+    return JSON.parse(text.replace(/```json|```/g,'').trim());
+  } catch(e) {
+    const t = transcript.toLowerCase().trim();
+    const pass = t.includes(word.toLowerCase()) || levenshtein(t, word.toLowerCase()) <= 1;
+    return { pass, feedback: pass ? `Good pronunciation of "${word}"!` : `Try again — focus on the ${phonetic} pattern.` };
+  }
+}
+
+// ── Session ──────────────────────────────────────────────────────────────────
 
 async function beginLesson() {
   setWaiting(true); showThinking();
+  let msgEl = null, firstSentence = true;
   try {
-    const reply = await callClaude('');
-    hideThinking();
-    const msgEl = addMessage('assistant', reply);
-    chatHistory.push({role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`});
-    chatHistory.push({role:'assistant',content:reply});
-    speakText(reply, msgEl.querySelector('.speak-btn'));
-  } catch(e) {
-    hideThinking();
-    addMessage('assistant', `Hello ${staffName}! Welcome to ${selectedLesson.name}. Do you have any questions about this lesson before we begin?`);
-  }
-  setWaiting(false);
+    await callClaudeStreaming('',
+      (sentence, fullSoFar) => {
+        if (firstSentence) { hideThinking(); msgEl = addMessage('assistant', fullSoFar); firstSentence = false; }
+        else if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullSoFar; }
+        enqueueTTS(sentence, msgEl ? msgEl.querySelector('.speak-btn') : null);
+      },
+      (fullText) => {
+        if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullText; }
+        chatHistory.push({role:'user',content:`Hello, I am ready to begin Module ${selectedLesson.module} Lesson ${selectedLesson.lesson}.`});
+        chatHistory.push({role:'assistant',content:fullText});
+        setWaiting(false);
+      },
+      () => { hideThinking(); addMessage('assistant',`Hello ${staffName}! Welcome to ${selectedLesson.name}. Do you have any questions before we begin?`); setWaiting(false); }
+    );
+  } catch(e) { hideThinking(); addMessage('assistant',`Hello ${staffName}! Welcome to ${selectedLesson.name}. Do you have any questions before we begin?`); setWaiting(false); }
 }
 
 async function sendMessage(userText) {
   if (!userText.trim() || isWaiting) return;
-  if (pronunTestWord) { addMessage('user', userText); evaluatePronunciation(userText); return; }
+
+  if (pronunTestWord) {
+    addMessage('user', userText);
+    const { word, phonetic, el } = pronunTestWord;
+    clearPronunTest();
+    setWaiting(true);
+    const result = await evaluatePronunciationWithClaude(userText, word, phonetic);
+    el.classList.remove('testing','passed','failed');
+    el.classList.add(result.pass ? 'passed' : 'failed');
+    const msgEl = addMessage('assistant', result.feedback);
+    chatHistory.push({role:'assistant',content:result.feedback});
+    speakText(result.feedback, msgEl.querySelector('.speak-btn'));
+    setWaiting(false);
+    return;
+  }
+
   addMessage('user', userText);
   chatHistory.push({role:'user',content:userText});
   setWaiting(true); showThinking();
+  let msgEl = null, firstSentence = true;
+
   try {
-    const reply = await callClaude(userText);
-    hideThinking();
-    const msgEl = addMessage('assistant', reply);
-    chatHistory.push({role:'assistant',content:reply});
-    speakText(reply, msgEl.querySelector('.speak-btn'));
-  } catch(e) { hideThinking(); addMessage('assistant','Something went wrong. Please try again.'); }
-  setWaiting(false); resetVoice();
+    await callClaudeStreaming(userText,
+      (sentence, fullSoFar) => {
+        if (firstSentence) { hideThinking(); msgEl = addMessage('assistant', fullSoFar); firstSentence = false; }
+        else if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullSoFar; }
+        enqueueTTS(sentence, msgEl ? msgEl.querySelector('.speak-btn') : null);
+      },
+      (fullText) => {
+        if (msgEl) { const b = msgEl.querySelector('.bubble.assistant'); if(b) b.textContent = fullText; }
+        chatHistory.push({role:'assistant',content:fullText});
+        setWaiting(false); resetVoice();
+      },
+      () => { hideThinking(); addMessage('assistant','Something went wrong. Please try again.'); setWaiting(false); }
+    );
+  } catch(e) { hideThinking(); addMessage('assistant','Something went wrong. Please try again.'); setWaiting(false); }
 }
+
+// ── UI ────────────────────────────────────────────────────────────────────────
 
 function addMessage(role, content) {
   const empty = document.getElementById('empty-state');
