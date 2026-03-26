@@ -57,13 +57,14 @@ header { width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--bo
 .new-lesson-btn:hover { background: var(--accent); color: #fff; }
 
 #pronun-bar { width: 100%; max-width: 600px; flex-shrink: 0; background: var(--accent-light); border-bottom: 1px solid rgba(45,106,79,0.15); padding: 10px 16px; display: none; }
-.pronun-bar-inner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.pronun-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; }
+.pronun-bar-inner { display: flex; flex-direction: column; gap: 7px; }
+.pronun-top-row { display: flex; align-items: center; justify-content: space-between; }
+.pronun-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.pronun-hint { font-size: 10px; color: var(--text-muted); font-style: italic; }
 .pronun-words { display: flex; gap: 6px; flex-wrap: wrap; }
 .pronun-word { background: var(--bg-2); border: 1.5px solid var(--border-2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; color: var(--text); cursor: pointer; transition: all 0.18s; }
 .pronun-word:hover { border-color: var(--accent); color: var(--accent); }
 .pronun-word.playing-word { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
-.pronun-hint { font-size: 10px; color: var(--text-muted); font-style: italic; }
 
 #chat-scroll { flex: 1; width: 100%; max-width: 600px; overflow-y: auto; padding: 20px 16px 12px; display: flex; flex-direction: column; gap: 14px; }
 #chat-scroll::-webkit-scrollbar { width: 3px; }
@@ -167,9 +168,11 @@ header { width: 100%; background: var(--bg-2); border-bottom: 1px solid var(--bo
 
   <div id="pronun-bar">
     <div class="pronun-bar-inner">
-      <span class="pronun-label">🎯 Pronunciation</span>
+      <div class="pronun-top-row">
+        <span class="pronun-label">🎯 Pronunciation</span>
+        <span class="pronun-hint">Tap a word to hear it</span>
+      </div>
       <div class="pronun-words" id="pronun-words"></div>
-      <span class="pronun-hint">Tap a word to hear the correct pronunciation</span>
     </div>
   </div>
 
